@@ -1,3 +1,6 @@
+
+/////////////////////////////////////// BASEMAP LAYERS //////////////////////////////////////
+
 // link to maps with api in config.js
 const mapboxLink = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
 
@@ -31,6 +34,8 @@ const baseMaps = {
     'Light Map': lightmap,
     'Dark Map': darkmap
 };
+
+/////////////////////////////////////// WINE CONSUMPTION LAYER //////////////////////////////////////
 
 // make variable for wineLayer to adjust later
 var wineLayer;
@@ -115,22 +120,39 @@ const myMap = L.map('map', {
 
 // add all map layers
 L.control.layers(baseMaps, mapOverlay, {
-    collapsed: true
+    collapsed: false
 }).addTo(myMap);
 
 // control that shows country info on hover
-let info = L.control();
+let info = L.control({ position: 'bottomright' });
 
+// add info div to wine layer
 info.onAdd = function (map) {
     this._div = L.DomUtil.create('div', 'info');
     this.update();
     return this._div;
 };
 
+// update info div whenever hovering over a country
 info.update = function (props) {
     this._div.innerHTML = '<h4>World Wine Consumption</h4>' +  (props ?
         '<b>' + props.name + '</b><br />' + props.wineConsumption + ' L'
-        : 'Hover over a country');
+        : 'Hover over a country<br><br>');
 };
 
+// add info div to myMap for wine layer
 info.addTo(myMap);
+
+// whenever wine layer is checked, show info div
+myMap.on('overlayadd', function(eventLayer){
+    if (eventLayer.name === 'Wine'){
+        myMap.addControl(info);
+    } 
+});
+
+// whenever wine layer is unchecked, remove info div
+myMap.on('overlayremove', function(eventLayer){
+    if (eventLayer.name === 'Wine'){
+         myMap.removeControl(info);
+    } 
+});
