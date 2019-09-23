@@ -37,8 +37,8 @@ const baseMaps = {
 
 /////////////////////////////////////// WINE CONSUMPTION LAYER //////////////////////////////////////
 
-// make variable for wineLayer to adjust later
-var wineLayer;
+// make variable for mapOverlay layers to adjust later
+var wineLayer, olympicLayer, militaryLayer;
 // set countryColor based on consumption of wine
 // color choices from http://colorbrewer2.org/?type=sequential&scheme=Purples&n=5
 function countryColor(d) {
@@ -109,7 +109,18 @@ wineLayer = L.geoJson(wineData, {
 // create overlays
 const mapOverlay = {
     'Wine': wineLayer
+    // 'Olympic Medals': olympicLayer,
+    // 'Overseas Military Bases': militaryLayer
 };
+
+
+
+
+
+
+
+
+
 
 // load satmap and outline as default
 const myMap = L.map('map', {
@@ -122,6 +133,19 @@ const myMap = L.map('map', {
 L.control.layers(baseMaps, mapOverlay, {
     collapsed: false
 }).addTo(myMap);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // control that shows country info on hover
 let info = L.control({ position: 'bottomright' });
@@ -143,10 +167,36 @@ info.update = function (props) {
 // add info div to myMap for wine layer
 info.addTo(myMap);
 
+// create legend
+const legend = L.control({position: 'bottomleft'});
+
+// add function to legend for wine layer
+legend.onAdd = function(map){
+    const div = L.DomUtil.create('div', 'legend');
+    const consumption = [0, 100, 1000, 10000, 100000, 1000000]
+    const labels = []
+    for (let i = 0; i < consumption.length; i++){
+        div.innerHTML +=
+            '<i style="background:' + countryColor(consumption[i] + 1) + '"></i> ' +
+            consumption[i] + (consumption[i + 1] ? '&ndash;' + consumption[i + 1] + '<br>' : '+')
+    }
+    return div
+}
+    
+// add legend to map for wine layer
+legend.addTo(myMap)
+
+
+
+
+
+
+// https://gis.stackexchange.com/a/188341
 // whenever wine layer is checked, show info div
 myMap.on('overlayadd', function(eventLayer){
     if (eventLayer.name === 'Wine'){
         myMap.addControl(info);
+        myMap.addControl(legend);
     } 
 });
 
@@ -154,5 +204,8 @@ myMap.on('overlayadd', function(eventLayer){
 myMap.on('overlayremove', function(eventLayer){
     if (eventLayer.name === 'Wine'){
          myMap.removeControl(info);
+         myMap.removeControl(legend);
     } 
 });
+
+
