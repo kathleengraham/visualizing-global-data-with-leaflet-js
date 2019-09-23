@@ -1,5 +1,5 @@
 
-/////////////////////////////////////// BASEMAP LAYERS //////////////////////////////////////
+//////////////////////////////////////////////// BASEMAP LAYERS ///////////////////////////////////////////////
 
 // link to maps with api in config.js
 const mapboxLink = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
@@ -35,10 +35,11 @@ const baseMaps = {
     'Dark Map': darkmap
 };
 
-/////////////////////////////////////// WINE CONSUMPTION LAYER //////////////////////////////////////
+// make variables for mapOverlay layers to adjust later
+var wineLayer, olympicsLayer, militaryLayer;
 
-// make variable for mapOverlay layers to adjust later
-var wineLayer, olympicLayer, militaryLayer;
+//////////////////////////////////////////// WINE CONSUMPTION LAYER ///////////////////////////////////////////
+
 // set countryColor based on consumption of wine
 // color choices from http://colorbrewer2.org/?type=sequential&scheme=Purples&n=5
 function countryColor(d) {
@@ -100,27 +101,30 @@ function onEachFeature(feature, layer) {
     });
 }
 
-// create wine layer that includes outlines, highlight, resethighlight, and click to zoom
+// create wine layer that includes styling on three features:
+// highlight and resethighlight when hovering, and click to zoom
 wineLayer = L.geoJson(wineData, {
     style: style,
     onEachFeature: onEachFeature
 });
 
+
+//////////////////////////////////////////// OLYMPIC MEDALS LAYER ///////////////////////////////////////////
+// create olympic layer
+olympicsLayer = L.geoJson(olympicsData);
+
+/////////////////////////////////////// OVERSEAS MILITARY BASES LAYER //////////////////////////////////////
+militaryLayer = L.geoJson(militaryData);
+
+
+
+//////////////////////////////////////////////// GENERAL MAP ///////////////////////////////////////////////
 // create overlays
 const mapOverlay = {
-    'Wine': wineLayer
-    // 'Olympic Medals': olympicLayer,
-    // 'Overseas Military Bases': militaryLayer
+    'Wine': wineLayer,
+    'Olympic Medals': olympicsLayer,
+    'Overseas Military Bases': militaryLayer
 };
-
-
-
-
-
-
-
-
-
 
 // load satmap and outline as default
 const myMap = L.map('map', {
@@ -135,30 +139,20 @@ L.control.layers(baseMaps, mapOverlay, {
 }).addTo(myMap);
 
 
-
-
-
-
-
-
-
-
-
-
-
+//////////////////////////////////////////// WINE INFO AND LEGEND //////////////////////////////////////////
 
 // control that shows country info on hover
 let info = L.control({ position: 'bottomright' });
 
 // add info div to wine layer
-info.onAdd = function (map) {
+info.onAdd = function() {
     this._div = L.DomUtil.create('div', 'info');
     this.update();
     return this._div;
 };
 
 // update info div whenever hovering over a country
-info.update = function (props) {
+info.update = function(props) {
     this._div.innerHTML = '<h4>World Wine Consumption</h4>' +  (props ?
         '<b>' + props.name + '</b><br />' + props.wineConsumption + ' L'
         : 'Hover over a country<br><br>');
@@ -171,7 +165,7 @@ info.addTo(myMap);
 const legend = L.control({position: 'bottomleft'});
 
 // add function to legend for wine layer
-legend.onAdd = function(map){
+legend.onAdd = function() {
     const div = L.DomUtil.create('div', 'legend');
     const consumption = [0, 100, 1000, 10000, 100000, 1000000]
     const labels = []
@@ -185,11 +179,6 @@ legend.onAdd = function(map){
     
 // add legend to map for wine layer
 legend.addTo(myMap)
-
-
-
-
-
 
 // https://gis.stackexchange.com/a/188341
 // whenever wine layer is checked, show info div
