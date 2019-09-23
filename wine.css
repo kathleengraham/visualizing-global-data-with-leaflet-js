@@ -1,0 +1,81 @@
+html,
+body,
+.container-fluid {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+}
+
+#map {
+  position: relative;
+  height: 85%;
+  width: 100%;
+}
+
+.navbar-custom .navbar-brand:link,
+.navbar-custom .navbar-brand:visited,
+.navbar-custom .navbar-brand:hover,
+.navbar-custom .navbar-brand:active {
+  color: black;
+}
+
+.navbar-custom {
+  width:100%;
+  background-color: white;
+  top:0;
+}
+
+.info {
+	padding: 6px 8px;
+	font: 14px/16px Arial, Helvetica, sans-serif;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
+}
+.info h4 {
+	margin: 0 0 5px;
+	color: #777;
+}
+
+.legend {
+  background-color: white;
+  line-height: 25px;
+  color: black;
+  width: auto;
+}
+
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.9;
+}
+
+footer {
+  background-color: white;
+  color: black;
+  font-size: 9pt; 
+  text-align: center; 
+  vertical-align: middle;
+  line-height: 45px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+
+}
+
+#leaflet-link:link,
+#leaflet-link:visited,
+#leaflet-link:hover,
+#leaflet-link:active {
+  color: black;
+}
+
+#gh-icon {
+  width: 20px;
+  height: 20px;
+  background-size: 100%;
+}
