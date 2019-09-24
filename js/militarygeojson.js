@@ -9,7 +9,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Australia",
-    "Overseas Base":"Malaysia"
+    "overseas_base":"Malaysia"
     }
   },
   {
@@ -20,7 +20,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Australia",
-    "Overseas Base":"United Arab Emirates"
+    "overseas_base":"United Arab Emirates"
     }
   },
   {
@@ -31,7 +31,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"China",
-    "Overseas Base":"Afghanistan"
+    "overseas_base":"Afghanistan"
     }
   },
   {
@@ -42,7 +42,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"China",
-    "Overseas Base":"Cambodia"
+    "overseas_base":"Cambodia"
     }
   },
   {
@@ -53,7 +53,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"China",
-    "Overseas Base":"Djibouti"
+    "overseas_base":"Djibouti"
     }
   },
   {
@@ -64,7 +64,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"China",
-    "Overseas Base":"Tajikistan"
+    "overseas_base":"Tajikistan"
     }
   },
   {
@@ -75,7 +75,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Chad"
+    "overseas_base":"Chad"
     }
   },
   {
@@ -86,7 +86,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Djibouti"
+    "overseas_base":"Djibouti"
     }
   },
   {
@@ -97,7 +97,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Gabon"
+    "overseas_base":"Gabon"
     }
   },
   {
@@ -108,7 +108,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Germany"
+    "overseas_base":"Germany"
     }
   },
   {
@@ -119,7 +119,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Ivory Coast"
+    "overseas_base":"Ivory Coast"
     }
   },
   {
@@ -130,7 +130,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Lebanon"
+    "overseas_base":"Lebanon"
     }
   },
   {
@@ -141,7 +141,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Niger"
+    "overseas_base":"Niger"
     }
   },
   {
@@ -152,7 +152,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Senegal"
+    "overseas_base":"Senegal"
     }
   },
   {
@@ -163,7 +163,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"Syria"
+    "overseas_base":"Syria"
     }
   },
   {
@@ -174,7 +174,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"France",
-    "Overseas Base":"United Arab Emirates"
+    "overseas_base":"United Arab Emirates"
     }
   },
   {
@@ -185,7 +185,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Germany",
-    "Overseas Base":"Canada"
+    "overseas_base":"Canada"
     }
   },
   {
@@ -196,7 +196,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Germany",
-    "Overseas Base":"France"
+    "overseas_base":"France"
     }
   },
   {
@@ -207,7 +207,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Germany",
-    "Overseas Base":"United States"
+    "overseas_base":"United States"
     }
   },
   {
@@ -218,7 +218,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Greece",
-    "Overseas Base":"Cyprus"
+    "overseas_base":"Cyprus"
     }
   },
   {
@@ -229,7 +229,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"India",
-    "Overseas Base":"Bhutan"
+    "overseas_base":"Bhutan"
     }
   },
   {
@@ -240,7 +240,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"India",
-    "Overseas Base":"Madagascar"
+    "overseas_base":"Madagascar"
     }
   },
   {
@@ -251,7 +251,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"India",
-    "Overseas Base":"Maldives"
+    "overseas_base":"Maldives"
     }
   },
   {
@@ -262,7 +262,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"India",
-    "Overseas Base":"Mauritius"
+    "overseas_base":"Mauritius"
     }
   },
   {
@@ -273,7 +273,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"India",
-    "Overseas Base":"Nepal"
+    "overseas_base":"Nepal"
     }
   },
   {
@@ -284,7 +284,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"India",
-    "Overseas Base":"Seychelles"
+    "overseas_base":"Seychelles"
     }
   },
   {
@@ -295,7 +295,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"India",
-    "Overseas Base":"Tajikistan"
+    "overseas_base":"Tajikistan"
     }
   },
   {
@@ -306,7 +306,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Iran",
-    "Overseas Base":"Eritrea"
+    "overseas_base":"Eritrea"
     }
   },
   {
@@ -317,7 +317,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Iran",
-    "Overseas Base":"Iraq"
+    "overseas_base":"Iraq"
     }
   },
   {
@@ -328,7 +328,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Iran",
-    "Overseas Base":"Lebanon"
+    "overseas_base":"Lebanon"
     }
   },
   {
@@ -339,7 +339,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Iran",
-    "Overseas Base":"Syria"
+    "overseas_base":"Syria"
     }
   },
   {
@@ -350,7 +350,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Israel",
-    "Overseas Base":"Eritrea"
+    "overseas_base":"Eritrea"
     }
   },
   {
@@ -361,7 +361,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Italy",
-    "Overseas Base":"Afghanistan"
+    "overseas_base":"Afghanistan"
     }
   },
   {
@@ -372,7 +372,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Italy",
-    "Overseas Base":"Djibouti"
+    "overseas_base":"Djibouti"
     }
   },
   {
@@ -383,7 +383,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Italy",
-    "Overseas Base":"Kuwait"
+    "overseas_base":"Kuwait"
     }
   },
   {
@@ -394,7 +394,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Italy",
-    "Overseas Base":"Libya"
+    "overseas_base":"Libya"
     }
   },
   {
@@ -405,7 +405,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Italy",
-    "Overseas Base":"United Arab Emirates"
+    "overseas_base":"United Arab Emirates"
     }
   },
   {
@@ -416,7 +416,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Italy",
-    "Overseas Base":"United States"
+    "overseas_base":"United States"
     }
   },
   {
@@ -427,7 +427,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Japan",
-    "Overseas Base":"Djibouti"
+    "overseas_base":"Djibouti"
     }
   },
   {
@@ -438,7 +438,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Pakistan",
-    "Overseas Base":"Saudi Arabia"
+    "overseas_base":"Saudi Arabia"
     }
   },
   {
@@ -449,7 +449,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Armenia"
+    "overseas_base":"Armenia"
     }
   },
   {
@@ -460,7 +460,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Belarus"
+    "overseas_base":"Belarus"
     }
   },
   {
@@ -471,7 +471,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Georgia"
+    "overseas_base":"Georgia"
     }
   },
   {
@@ -482,7 +482,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Kazakhstan"
+    "overseas_base":"Kazakhstan"
     }
   },
   {
@@ -493,7 +493,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Kyrgyzstan"
+    "overseas_base":"Kyrgyzstan"
     }
   },
   {
@@ -504,7 +504,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Moldova"
+    "overseas_base":"Moldova"
     }
   },
   {
@@ -515,7 +515,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Syria"
+    "overseas_base":"Syria"
     }
   },
   {
@@ -526,7 +526,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Tajikistan"
+    "overseas_base":"Tajikistan"
     }
   },
   {
@@ -537,7 +537,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Russia",
-    "Overseas Base":"Ukraine"
+    "overseas_base":"Ukraine"
     }
   },
   {
@@ -548,7 +548,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Singapore",
-    "Overseas Base":"Australia"
+    "overseas_base":"Australia"
     }
   },
   {
@@ -559,7 +559,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Singapore",
-    "Overseas Base":"France"
+    "overseas_base":"France"
     }
   },
   {
@@ -570,7 +570,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Singapore",
-    "Overseas Base":"New Zealand"
+    "overseas_base":"New Zealand"
     }
   },
   {
@@ -581,7 +581,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Singapore",
-    "Overseas Base":"United States"
+    "overseas_base":"United States"
     }
   },
   {
@@ -592,7 +592,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Turkey",
-    "Overseas Base":"Azerbaijan"
+    "overseas_base":"Azerbaijan"
     }
   },
   {
@@ -603,7 +603,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Turkey",
-    "Overseas Base":"Iraq"
+    "overseas_base":"Iraq"
     }
   },
   {
@@ -614,7 +614,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Turkey",
-    "Overseas Base":"Northern Cyprus"
+    "overseas_base":"Northern Cyprus"
     }
   },
   {
@@ -625,7 +625,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Turkey",
-    "Overseas Base":"Qatar"
+    "overseas_base":"Qatar"
     }
   },
   {
@@ -636,7 +636,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Turkey",
-    "Overseas Base":"Somalia"
+    "overseas_base":"Somalia"
     }
   },
   {
@@ -647,7 +647,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"Turkey",
-    "Overseas Base":"Syria"
+    "overseas_base":"Syria"
     }
   },
   {
@@ -658,7 +658,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Arab Emirates",
-    "Overseas Base":"Eritrea"
+    "overseas_base":"Eritrea"
     }
   },
   {
@@ -669,7 +669,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Arab Emirates",
-    "Overseas Base":"Libya"
+    "overseas_base":"Libya"
     }
   },
   {
@@ -680,7 +680,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Arab Emirates",
-    "Overseas Base":"Somaliland"
+    "overseas_base":"Somaliland"
     }
   },
   {
@@ -691,7 +691,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Arab Emirates",
-    "Overseas Base":"Yemen"
+    "overseas_base":"Yemen"
     }
   },
   {
@@ -702,7 +702,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Bahrain"
+    "overseas_base":"Bahrain"
     }
   },
   {
@@ -713,7 +713,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Belize"
+    "overseas_base":"Belize"
     }
   },
   {
@@ -724,7 +724,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Brunei"
+    "overseas_base":"Brunei"
     }
   },
   {
@@ -735,7 +735,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Canada"
+    "overseas_base":"Canada"
     }
   },
   {
@@ -746,7 +746,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Germany"
+    "overseas_base":"Germany"
     }
   },
   {
@@ -757,7 +757,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Kenya"
+    "overseas_base":"Kenya"
     }
   },
   {
@@ -768,7 +768,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Nepal"
+    "overseas_base":"Nepal"
     }
   },
   {
@@ -779,7 +779,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Norway"
+    "overseas_base":"Norway"
     }
   },
   {
@@ -790,7 +790,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Oman"
+    "overseas_base":"Oman"
     }
   },
   {
@@ -801,7 +801,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Qatar"
+    "overseas_base":"Qatar"
     }
   },
   {
@@ -812,7 +812,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Republic of Cyprus"
+    "overseas_base":"Republic of Cyprus"
     }
   },
   {
@@ -823,7 +823,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"Singapore"
+    "overseas_base":"Singapore"
     }
   },
   {
@@ -834,7 +834,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"United Arab Emirates"
+    "overseas_base":"United Arab Emirates"
     }
   },
   {
@@ -845,7 +845,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United Kingdom",
-    "Overseas Base":"United States"
+    "overseas_base":"United States"
     }
   },
   {
@@ -856,7 +856,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Afghanistan"
+    "overseas_base":"Afghanistan"
     }
   },
   {
@@ -867,7 +867,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Australia"
+    "overseas_base":"Australia"
     }
   },
   {
@@ -878,7 +878,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Bahrain"
+    "overseas_base":"Bahrain"
     }
   },
   {
@@ -889,7 +889,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Belgium"
+    "overseas_base":"Belgium"
     }
   },
   {
@@ -900,7 +900,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Brazil"
+    "overseas_base":"Brazil"
     }
   },
   {
@@ -911,7 +911,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"British Indian Ocean Territory"
+    "overseas_base":"British Indian Ocean Territory"
     }
   },
   {
@@ -922,7 +922,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Bulgaria"
+    "overseas_base":"Bulgaria"
     }
   },
   {
@@ -933,7 +933,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Cameroon"
+    "overseas_base":"Cameroon"
     }
   },
   {
@@ -944,7 +944,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Cuba"
+    "overseas_base":"Cuba"
     }
   },
   {
@@ -955,7 +955,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Curaçao"
+    "overseas_base":"Curaçao"
     }
   },
   {
@@ -966,7 +966,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Djibouti"
+    "overseas_base":"Djibouti"
     }
   },
   {
@@ -977,7 +977,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Germany"
+    "overseas_base":"Germany"
     }
   },
   {
@@ -988,7 +988,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Greece"
+    "overseas_base":"Greece"
     }
   },
   {
@@ -999,7 +999,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Greenland"
+    "overseas_base":"Greenland"
     }
   },
   {
@@ -1010,7 +1010,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Honduras"
+    "overseas_base":"Honduras"
     }
   },
   {
@@ -1021,7 +1021,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Iceland"
+    "overseas_base":"Iceland"
     }
   },
   {
@@ -1032,7 +1032,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Iraq"
+    "overseas_base":"Iraq"
     }
   },
   {
@@ -1043,7 +1043,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Israel"
+    "overseas_base":"Israel"
     }
   },
   {
@@ -1054,7 +1054,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Italy"
+    "overseas_base":"Italy"
     }
   },
   {
@@ -1065,7 +1065,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Japan"
+    "overseas_base":"Japan"
     }
   },
   {
@@ -1076,7 +1076,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Kosovo"
+    "overseas_base":"Kosovo"
     }
   },
   {
@@ -1087,7 +1087,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Kuwait"
+    "overseas_base":"Kuwait"
     }
   },
   {
@@ -1098,7 +1098,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Netherlands"
+    "overseas_base":"Netherlands"
     }
   },
   {
@@ -1109,7 +1109,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Niger"
+    "overseas_base":"Niger"
     }
   },
   {
@@ -1120,7 +1120,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Norway"
+    "overseas_base":"Norway"
     }
   },
   {
@@ -1131,7 +1131,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Oman"
+    "overseas_base":"Oman"
     }
   },
   {
@@ -1142,7 +1142,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Philippines"
+    "overseas_base":"Philippines"
     }
   },
   {
@@ -1153,7 +1153,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Portugal"
+    "overseas_base":"Portugal"
     }
   },
   {
@@ -1164,7 +1164,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Qatar"
+    "overseas_base":"Qatar"
     }
   },
   {
@@ -1175,7 +1175,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Saudi Arabia"
+    "overseas_base":"Saudi Arabia"
     }
   },
   {
@@ -1186,7 +1186,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Singapore"
+    "overseas_base":"Singapore"
     }
   },
   {
@@ -1197,7 +1197,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"South Korea"
+    "overseas_base":"South Korea"
     }
   },
   {
@@ -1208,7 +1208,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Spain"
+    "overseas_base":"Spain"
     }
   },
   {
@@ -1219,7 +1219,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Syria"
+    "overseas_base":"Syria"
     }
   },
   {
@@ -1230,7 +1230,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Tunisia"
+    "overseas_base":"Tunisia"
     }
   },
   {
@@ -1241,7 +1241,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"Turkey"
+    "overseas_base":"Turkey"
     }
   },
   {
@@ -1252,7 +1252,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"United Arab Emirates"
+    "overseas_base":"United Arab Emirates"
     }
   },
   {
@@ -1263,7 +1263,7 @@ const militaryData = {
     },
     "properties": {
     "Country":"United States",
-    "Overseas Base":"United Kingdom"
+    "overseas_base":"United Kingdom"
     }
   }
 ]

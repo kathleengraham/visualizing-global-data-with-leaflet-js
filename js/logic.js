@@ -134,16 +134,26 @@ olympicsLayer = L.geoJson(olympicsData,{
 })
 
 /////////////////////////////////////// OVERSEAS MILITARY BASES LAYER //////////////////////////////////////
-militaryLayer = L.geoJson(militaryData);
+const tankIcon = L.icon({
+	iconUrl: '../images/tank.svg',
+	iconSize:     [38, 95]
+});;
+
+militaryLayer = L.geoJson(militaryData, {
+	pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, {icon: tankIcon})
+            .bindTooltip('<h5>'+feature.properties.Country+'</h5>');
+	}
+});
 
 
 
 //////////////////////////////////////////////// GENERAL MAP ///////////////////////////////////////////////
 // create overlays
 const mapOverlay = {
-    "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='../images/wineglass.jpg'/></span>": wineLayer,
-    "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='olympicslayer-img' src='../images/medal.png'/></span>": olympicsLayer,
-    "<span>&nbsp;&nbsp; Overseas Military Bases &nbsp;&nbsp;<img class='militarylayer-img' src='../images/tank.png'/></span>": militaryLayer
+    "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>": wineLayer,
+    "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>": olympicsLayer,
+    "<span>&nbsp;&nbsp; Overseas Military Bases &nbsp;&nbsp;<img class='layer-img' src='../images/tank.svg'/></span>": militaryLayer
 };
 
 // load satmap and outline as default
@@ -224,7 +234,7 @@ olympicsLegend.onAdd = function() {
 // https://gis.stackexchange.com/a/188341
 // whenever wine layer is checked, show info div
 myMap.on('overlayadd', function(eventLayer){
-    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='../images/wineglass.jpg'/></span>"){
+    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='../images/glass.svg'/></span>"){
         myMap.addControl(info);
         myMap.addControl(legend);
     } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='olympicslayer-img' src='../images/medal.png'/></span>") {
@@ -234,7 +244,7 @@ myMap.on('overlayadd', function(eventLayer){
 
 // whenever wine layer is unchecked, remove info div
 myMap.on('overlayremove', function(eventLayer){
-    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='../images/wineglass.jpg'/></span>"){
+    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='../images/glass.svg'/></span>"){
          myMap.removeControl(info);
          myMap.removeControl(legend);
     } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='olympicslayer-img' src='../images/medal.png'/></span>") {
