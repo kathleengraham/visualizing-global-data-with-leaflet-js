@@ -30,9 +30,9 @@ const darkmap = L.tileLayer(mapboxLink,{
 
 // create basemap layer with the other maps
 const baseMaps = {
-    'Satellite Map': satmap,
-    'Light Map': lightmap,
-    'Dark Map': darkmap
+    "<span>&nbsp;&nbsp; Satellite Map &nbsp;&nbsp;<img class='layer-img' src='satellite.jpg'/></span>": satmap,
+    "<span>&nbsp;&nbsp; Light Map &nbsp;&nbsp;<img class='layer-img' src='lightmap.jpg'/></span>": lightmap,
+    "<span>&nbsp;&nbsp; Dark Map &nbsp;&nbsp;<img class='layer-img' src='darkmap.jpg'/></span>": darkmap
 };
 
 // make variables for mapOverlay layers to adjust later
@@ -74,9 +74,10 @@ function highlightFeature(e) {
         fillOpacity: 0.7
     });
 
-    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
-        layer.bringToFront();
-    }
+    // don't want to bring to front because it covers up the olympic circles when both layers checked
+    // if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+    //     layer.bringToFront();
+    // }
 
     info.update(layer.feature.properties);
 }
@@ -112,8 +113,8 @@ wineLayer = L.geoJson(wineData, {
 //////////////////////////////////////////// OLYMPIC MEDALS LAYER ///////////////////////////////////////////
 
 // create markerSize based on number of medals won
-function medalSize(medals) {
-    return medals * 500
+function olympicsSize(medals) {
+    return medals * 150
 }
 
 function olympicsColor(d) {
@@ -127,7 +128,7 @@ function olympicsColor(d) {
 olympicsLayer = L.geoJson(olympicsData,{
     pointToLayer:function(feature,latlng){
         return new L.circle(latlng,
-            {radius:medalSize(feature.properties.medals),fillColor:olympicsColor(feature.properties.medals),fillOpacity:0.9,stroke:false})
+            {radius:olympicsSize(feature.properties.medals),fillColor:olympicsColor(feature.properties.medals),fillOpacity:0.9,stroke:false})
             .bindTooltip('<h4>'+feature.properties.Country+': '+feature.properties.medals+' medals</h4>').openTooltip()
     }
 })
@@ -140,28 +141,30 @@ militaryLayer = L.geoJson(militaryData);
 //////////////////////////////////////////////// GENERAL MAP ///////////////////////////////////////////////
 // create overlays
 const mapOverlay = {
-    'Wine': wineLayer,
-    'Olympic Medals': olympicsLayer,
-    'Overseas Military Bases': militaryLayer
+    "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='wineglass.jpg'/></span>": wineLayer,
+    "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='olympicslayer-img' src='medal.png'/></span>": olympicsLayer,
+    "<span>&nbsp;&nbsp; Overseas Military Bases &nbsp;&nbsp;<img class='militarylayer-img' src='tank.png'/></span>": militaryLayer
 };
 
 // load satmap and outline as default
 const myMap = L.map('map', {
-    center: [0,0],
+    center: [45,0],
     zoom: 3,
     layers: [lightmap, wineLayer]
 });
 
 // add all map layers
-L.control.layers(baseMaps, mapOverlay, {
+const layerDiv = L.control.layers(baseMaps, mapOverlay, {
     collapsed: false
-}).addTo(myMap);
+})
+
+layerDiv.addTo(myMap);
 
 
 //////////////////////////////////////////// WINE INFO AND LEGEND //////////////////////////////////////////
 
 // control that shows country info on hover
-let info = L.control({ position: 'bottomright' });
+let info = L.control({ position: 'bottomleft' });
 
 // add info div to wine layer
 info.onAdd = function() {
@@ -172,7 +175,7 @@ info.onAdd = function() {
 
 // update info div whenever hovering over a country
 info.update = function(props) {
-    this._div.innerHTML = '<h4>World Wine Consumption</h4>' +  (props ?
+    this._div.innerHTML = '<h4>World Wine Consumption (2017)</h4>' +  (props ?
         '<b>' + props.name + '</b><br />' + props.wineConsumption + ' L'
         : 'Hover over a country<br><br>');
 };
@@ -195,47 +198,46 @@ legend.onAdd = function() {
     }
     return div
 }
-    
-// add wine legend to map for wine layer
-legend.addTo(myMap)
+
+legend.addTo(myMap);
+
+//////////////////////////////////////////// OLYMPICS LEGEND //////////////////////////////////////////
 
 // create olympic legend
-const medalLegend = L.control({position: 'bottom'});
+const olympicsLegend = L.control({position: 'bottomright'});
 
-// add function to legend for wine layer
-medalLegend.onAdd = function() {
+// add function to legend for olympics layer
+olympicsLegend.onAdd = function() {
     const div = L.DomUtil.create('div', 'legend');
     const medals = [0,90,100,200]
     const labels = []
-    for (let i = 0; i < consumption.length; i++){
+    for (let i = 0; i < medals.length; i++){
         div.innerHTML +=
-            '<i style="background:' + countryColor(consumption[i] + 1) + '"></i> ' +
-            consumption[i] + (consumption[i + 1] ? '&ndash;' + consumption[i + 1] + '<br>' : '+')
+            '<i style="background:' + olympicsColor(medals[i] + 1) + '"></i> ' +
+            medals[i] + (medals[i + 1] ? '&ndash;' + medals[i + 1] + '<br>' : '+')
     }
     return div
 }
-    
-// add legend to map for wine layer
-legend.addTo(myMap)
 
 
-
-
+/////////////////////////////////////// CONTROL DOMUTILS FOR CERTAIN LAYERS  ////////////////////////////////////
 // https://gis.stackexchange.com/a/188341
 // whenever wine layer is checked, show info div
 myMap.on('overlayadd', function(eventLayer){
-    if (eventLayer.name === 'Wine'){
+    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='wineglass.jpg'/></span>"){
         myMap.addControl(info);
         myMap.addControl(legend);
-    } 
+    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='olympicslayer-img' src='medal.png'/></span>") {
+        myMap.addControl(olympicsLegend);
+    }
 });
 
 // whenever wine layer is unchecked, remove info div
 myMap.on('overlayremove', function(eventLayer){
-    if (eventLayer.name === 'Wine'){
+    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='wineglass.jpg'/></span>"){
          myMap.removeControl(info);
          myMap.removeControl(legend);
-    } 
+    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='olympicslayer-img' src='medal.png'/></span>") {
+        myMap.removeControl(olympicsLegend);
+    }
 });
-
-

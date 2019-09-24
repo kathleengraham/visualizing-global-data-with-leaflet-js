@@ -33,6 +33,7 @@ body,
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
 	border-radius: 5px;
 }
+
 .info h4 {
 	margin: 0 0 5px;
 	color: #777;
@@ -57,11 +58,41 @@ body,
   border: solid 1px #777;
 }
 
-.text {
-  position: absolute;
-  width:1000px;
-  font-size:20px;
+h4 {
+  padding: 5px;
+  color: #777;
 }
+
+.layerDiv {
+  padding: 10px;
+
+}
+
+.winelayer-img {
+  width: 15px;
+  height: 20px;
+  background-size: 100%;
+}
+
+.olympicslayer-img {
+  width: 20px;
+  height: 20px;
+  background-size: 100%;
+}
+
+.militarylayer-img {
+  width: 20px;
+  height: 20px;
+  background-size: 100%;
+}
+
+.layer-img {
+  width: 20px;
+  height: 20px;
+  background-size: 100%;
+}
+
+
 
 footer {
   background-color: white;
@@ -77,10 +108,10 @@ footer {
 
 }
 
-#leaflet-link:link,
-#leaflet-link:visited,
-#leaflet-link:hover,
-#leaflet-link:active {
+.footer-link:link,
+.footer-link:visited,
+.footer-link:hover,
+.footer-link:active {
   color: black;
 }
 
