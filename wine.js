@@ -110,8 +110,27 @@ wineLayer = L.geoJson(wineData, {
 
 
 //////////////////////////////////////////// OLYMPIC MEDALS LAYER ///////////////////////////////////////////
+
+// create markerSize based on number of medals won
+function medalSize(medals) {
+    return medals * 500
+}
+
+function olympicsColor(d) {
+    return d > 200 ? 'yellow' :
+        d > 100 ? 'blue' :
+        d > 90 ? 'green' :
+        'red'; 
+}
+
 // create olympic layer
-olympicsLayer = L.geoJson(olympicsData);
+olympicsLayer = L.geoJson(olympicsData,{
+    pointToLayer:function(feature,latlng){
+        return new L.circle(latlng,
+            {radius:medalSize(feature.properties.medals),fillColor:olympicsColor(feature.properties.medals),fillOpacity:0.9,stroke:false})
+            .bindTooltip('<h4>'+feature.properties.Country+': '+feature.properties.medals+' medals</h4>').openTooltip()
+    }
+})
 
 /////////////////////////////////////// OVERSEAS MILITARY BASES LAYER //////////////////////////////////////
 militaryLayer = L.geoJson(militaryData);
@@ -161,7 +180,7 @@ info.update = function(props) {
 // add info div to myMap for wine layer
 info.addTo(myMap);
 
-// create legend
+// create wine legend
 const legend = L.control({position: 'bottomleft'});
 
 // add function to legend for wine layer
@@ -177,8 +196,30 @@ legend.onAdd = function() {
     return div
 }
     
+// add wine legend to map for wine layer
+legend.addTo(myMap)
+
+// create olympic legend
+const medalLegend = L.control({position: 'bottom'});
+
+// add function to legend for wine layer
+medalLegend.onAdd = function() {
+    const div = L.DomUtil.create('div', 'legend');
+    const medals = [0,90,100,200]
+    const labels = []
+    for (let i = 0; i < consumption.length; i++){
+        div.innerHTML +=
+            '<i style="background:' + countryColor(consumption[i] + 1) + '"></i> ' +
+            consumption[i] + (consumption[i + 1] ? '&ndash;' + consumption[i + 1] + '<br>' : '+')
+    }
+    return div
+}
+    
 // add legend to map for wine layer
 legend.addTo(myMap)
+
+
+
 
 // https://gis.stackexchange.com/a/188341
 // whenever wine layer is checked, show info div

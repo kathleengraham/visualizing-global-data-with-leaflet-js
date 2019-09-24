@@ -39,10 +39,13 @@ body,
 }
 
 .legend {
-  background-color: white;
   line-height: 25px;
-  color: black;
+	background: white;
+	background: rgba(255,255,255,0.8);
+	box-shadow: 0 0 15px rgba(0,0,0,0.2);
+	border-radius: 5px;
   width: auto;
+  padding: 5px;
 }
 
 .legend i {
@@ -51,6 +54,13 @@ body,
   float: left;
   margin-right: 8px;
   opacity: 0.9;
+  border: solid 1px #777;
+}
+
+.text {
+  position: absolute;
+  width:1000px;
+  font-size:20px;
 }
 
 footer {
