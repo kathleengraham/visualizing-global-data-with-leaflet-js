@@ -6,7 +6,7 @@
 
 ## Contributors:
 
-* Julia Gadja
+* Julia Gajda
 * Kathleen Graham
 * Tamara Najjar
   
