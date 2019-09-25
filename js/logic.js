@@ -1,6 +1,4 @@
-
 //////////////////////////////////////////////// BASEMAP LAYERS ///////////////////////////////////////////////
-
 // link to maps with api in config.js
 const mapboxLink = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
 
@@ -39,7 +37,6 @@ const baseMaps = {
 var wineLayer, olympicsLayer, militaryLayer;
 
 //////////////////////////////////////////// WINE CONSUMPTION LAYER ///////////////////////////////////////////
-
 // set countryColor based on consumption of wine
 // color choices from http://colorbrewer2.org/?type=sequential&scheme=Purples&n=5
 function countryColor(d) {
@@ -109,19 +106,21 @@ wineLayer = L.geoJson(wineData, {
     onEachFeature: onEachFeature
 });
 
-
 //////////////////////////////////////////// OLYMPIC MEDALS LAYER ///////////////////////////////////////////
-
 // create markerSize based on number of medals won
-function olympicsSize(medals) {
-    return medals * 150
+function olympicsSize(m) {
+    return m > 1000 ? m*125 :
+        m > 500 ? m*250 :
+        m > 100 ? m*500 :
+        m*800
 }
 
 function olympicsColor(d) {
-    return d > 200 ? 'yellow' :
-        d > 100 ? 'blue' :
-        d > 90 ? 'green' :
-        'red'; 
+    return d > 500 ? '#0186C3' :
+        d > 300 ? '#FBB32E' :
+        d > 200 ? '#158C39' :
+        d > 100 ? '#EE304D' :
+        '#000000'; 
 }
 
 // create olympic layer
@@ -129,24 +128,25 @@ olympicsLayer = L.geoJson(olympicsData,{
     pointToLayer:function(feature,latlng){
         return new L.circle(latlng,
             {radius:olympicsSize(feature.properties.medals),fillColor:olympicsColor(feature.properties.medals),fillOpacity:0.9,stroke:false})
-            .bindTooltip('<h4>'+feature.properties.Country+': '+feature.properties.medals+' medals</h4>').openTooltip()
+            .bindTooltip('<div><h4>'+feature.properties.country+'<br><img class="flag-img" src="'+feature.properties.flag
+            +'"><hr>Rank: '+feature.properties.rank+'</h4><h5>'
+            +'<img class="medal-img" src="images/gold-medal.svg">Medals: '+feature.properties.medals+'</h5></div>',{'className': 'medal-tooltip'})
+            .openTooltip()
     }
 })
 
 /////////////////////////////////////// OVERSEAS MILITARY BASES LAYER //////////////////////////////////////
 const tankIcon = L.icon({
 	iconUrl: '../images/tank.svg',
-	iconSize:     [38, 95]
-});;
+	iconSize: [38, 95]
+});
 
 militaryLayer = L.geoJson(militaryData, {
 	pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {icon: tankIcon})
-            .bindTooltip('<h5>'+feature.properties.Country+'</h5>');
+            .bindTooltip('<h5>'+feature.properties.country+'</h5>'+feature.properties.base_name, {'className': 'tank-tooltip'});
 	}
 });
-
-
 
 //////////////////////////////////////////////// GENERAL MAP ///////////////////////////////////////////////
 // create overlays
@@ -170,9 +170,7 @@ const layerDiv = L.control.layers(baseMaps, mapOverlay, {
 
 layerDiv.addTo(myMap);
 
-
 //////////////////////////////////////////// WINE INFO AND LEGEND //////////////////////////////////////////
-
 // control that shows country info on hover
 let info = L.control({ position: 'bottomleft' });
 
@@ -211,7 +209,21 @@ legend.onAdd = function() {
 
 legend.addTo(myMap);
 
-//////////////////////////////////////////// OLYMPICS LEGEND //////////////////////////////////////////
+//////////////////////////////////////////// OLYMPICS INFO AND LEGEND //////////////////////////////////////////
+// div about medals
+let olympicsInfo = L.control({ position: 'bottomright' });
+
+// add info div to olympic layer
+olympicsInfo.onAdd = function() {
+    this._div = L.DomUtil.create('div', 'info');
+    this.update();
+    return this._div;
+};
+
+// update info div about olympic medals
+olympicsInfo.update = function() {
+    this._div.innerHTML = '<h4>Olympic Medals Won (1896-2016)</h4>';
+};
 
 // create olympic legend
 const olympicsLegend = L.control({position: 'bottomright'});
@@ -219,7 +231,7 @@ const olympicsLegend = L.control({position: 'bottomright'});
 // add function to legend for olympics layer
 olympicsLegend.onAdd = function() {
     const div = L.DomUtil.create('div', 'legend');
-    const medals = [0,90,100,200]
+    const medals = [0,100,200,300,500]
     const labels = []
     for (let i = 0; i < medals.length; i++){
         div.innerHTML +=
@@ -229,25 +241,26 @@ olympicsLegend.onAdd = function() {
     return div
 }
 
-
 /////////////////////////////////////// CONTROL DOMUTILS FOR CERTAIN LAYERS  ////////////////////////////////////
 // https://gis.stackexchange.com/a/188341
-// whenever wine layer is checked, show info div
+// show info and legend depending on which layer is checked
 myMap.on('overlayadd', function(eventLayer){
-    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='../images/glass.svg'/></span>"){
+    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>"){
         myMap.addControl(info);
         myMap.addControl(legend);
-    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='olympicslayer-img' src='../images/medal.png'/></span>") {
+    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
+        myMap.addControl(olympicsInfo);
         myMap.addControl(olympicsLegend);
     }
 });
 
-// whenever wine layer is unchecked, remove info div
+// remove info and legend depending on which layer is unchecked
 myMap.on('overlayremove', function(eventLayer){
-    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='winelayer-img' src='../images/glass.svg'/></span>"){
+    if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>"){
          myMap.removeControl(info);
          myMap.removeControl(legend);
-    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='olympicslayer-img' src='../images/medal.png'/></span>") {
+    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
+        myMap.removeControl(olympicsInfo);
         myMap.removeControl(olympicsLegend);
     }
 });

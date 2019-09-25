@@ -31,7 +31,7 @@ body,
 	background: white;
 	background: rgba(255,255,255,0.8);
 	box-shadow: 0 0 15px rgba(0,0,0,0.2);
-	border-radius: 5px;
+  border-radius: 5px;
 }
 
 .info h4 {
@@ -54,13 +54,14 @@ body,
   height: 18px;
   float: left;
   margin-right: 8px;
-  opacity: 0.9;
   border: solid 1px #777;
+  border-radius: 50px;
 }
 
-h4 {
+.medal-tooltip, .tank-tooltip {
   padding: 5px;
   color: #777;
+  text-align: center;
 }
 
 .layerDiv {
@@ -74,7 +75,28 @@ h4 {
   background-size: 100%;
 }
 
+.medal-img {
+  width: 30px;
+  height: 30px;
+  background-size: 100%;
+}
 
+.flag-img {
+  width: 40px;
+  height: 40px;
+  background-size: 100%;
+}
+
+.olympic-div-img {
+  width: 10%;
+  height: 10%;
+  position: relative;
+  display: block;
+}
+
+h4 {
+  text-align: center;
+}
 
 footer {
   background-color: white;
