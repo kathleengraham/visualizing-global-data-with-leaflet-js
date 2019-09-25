@@ -41,22 +41,12 @@ var wineLayer, olympicsLayer, militaryLayer;
 // color choices from http://colorbrewer2.org/?type=sequential&scheme=Purples&n=5
 
 // blues
-// function countryColor(d) {
-//     return d > 1000000 ? '#016c59' :
-//         d > 100000 ? '#1c9099' :
-//         d > 10000 ? '#67a9cf' :
-//         d > 1000 ? '#bdc9e1' :
-//         d > 100 ? '#f6eff7' :
-//         'white';
-// }
-
-// purples
 function countryColor(d) {
-    return d > 1000000 ? '#54278f' :
-        d > 100000 ? '#756bb1' :
-        d > 10000 ? '#9e9ac8' :
-        d > 1000 ? '#cbc9e2' :
-        d > 100 ? '#f2f0f7' :
+    return d > 1000000 ? '#016c59' :
+        d > 100000 ? '#1c9099' :
+        d > 10000 ? '#67a9cf' :
+        d > 1000 ? '#bdc9e1' :
+        d > 100 ? '#f6eff7' :
         'white';
 }
 
