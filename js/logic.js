@@ -39,6 +39,18 @@ var wineLayer, olympicsLayer, militaryLayer;
 //////////////////////////////////////////// WINE CONSUMPTION LAYER ///////////////////////////////////////////
 // set countryColor based on consumption of wine
 // color choices from http://colorbrewer2.org/?type=sequential&scheme=Purples&n=5
+
+// blues
+// function countryColor(d) {
+//     return d > 1000000 ? '#016c59' :
+//         d > 100000 ? '#1c9099' :
+//         d > 10000 ? '#67a9cf' :
+//         d > 1000 ? '#bdc9e1' :
+//         d > 100 ? '#f6eff7' :
+//         'white';
+// }
+
+// purples
 function countryColor(d) {
     return d > 1000000 ? '#54278f' :
         d > 100000 ? '#756bb1' :
@@ -55,7 +67,7 @@ function style(feature) {
         opacity: 1,
         color: 'white',
         dashArray: '3',
-        fillOpacity: 0.7,
+        fillOpacity: 0.5,
         fillColor: countryColor(feature.properties.wineConsumption)
     };
 }
@@ -109,18 +121,17 @@ wineLayer = L.geoJson(wineData, {
 //////////////////////////////////////////// OLYMPIC MEDALS LAYER ///////////////////////////////////////////
 // create markerSize based on number of medals won
 function olympicsSize(m) {
-    return m > 1000 ? m*125 :
+    return m > 1000 ? m*150 :
         m > 500 ? m*250 :
         m > 100 ? m*500 :
-        m*800
+        m*1000
 }
 
 function olympicsColor(d) {
-    return d > 500 ? '#0186C3' :
-        d > 300 ? '#FBB32E' :
+    return d > 800 ? '#FBB32E' :
+        d > 400 ? '#0186C3' :
         d > 200 ? '#158C39' :
-        d > 100 ? '#EE304D' :
-        '#000000'; 
+        '#EE304D'
 }
 
 // create olympic layer
@@ -136,15 +147,17 @@ olympicsLayer = L.geoJson(olympicsData,{
 })
 
 /////////////////////////////////////// OVERSEAS MILITARY BASES LAYER //////////////////////////////////////
+// define tank icon to be used for markers in military layer
 const tankIcon = L.icon({
 	iconUrl: '../images/tank.svg',
 	iconSize: [38, 95]
 });
 
+// can look up difference betweeen L.SVG L.marker with icon as a parameter
 militaryLayer = L.geoJson(militaryData, {
 	pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {icon: tankIcon})
-            .bindTooltip('<h5>'+feature.properties.country+'</h5>'+feature.properties.base_name, {'className': 'tank-tooltip'});
+            .bindPopup('<h5>'+feature.properties.country+'</h5>'+feature.properties.base_name, {'className': 'tank-popup'});
 	}
 });
 
@@ -198,7 +211,7 @@ const legend = L.control({position: 'bottomleft'});
 legend.onAdd = function() {
     const div = L.DomUtil.create('div', 'legend');
     const consumption = [0, 100, 1000, 10000, 100000, 1000000]
-    const labels = []
+    // const labels = []
     for (let i = 0; i < consumption.length; i++){
         div.innerHTML +=
             '<i style="background:' + countryColor(consumption[i] + 1) + '"></i> ' +
@@ -210,29 +223,15 @@ legend.onAdd = function() {
 legend.addTo(myMap);
 
 //////////////////////////////////////////// OLYMPICS INFO AND LEGEND //////////////////////////////////////////
-// div about medals
-let olympicsInfo = L.control({ position: 'bottomright' });
-
-// add info div to olympic layer
-olympicsInfo.onAdd = function() {
-    this._div = L.DomUtil.create('div', 'info');
-    this.update();
-    return this._div;
-};
-
-// update info div about olympic medals
-olympicsInfo.update = function() {
-    this._div.innerHTML = '<h4>Olympic Medals Won (1896-2016)</h4>';
-};
-
 // create olympic legend
 const olympicsLegend = L.control({position: 'bottomright'});
 
 // add function to legend for olympics layer
 olympicsLegend.onAdd = function() {
-    const div = L.DomUtil.create('div', 'legend');
-    const medals = [0,100,200,300,500]
-    const labels = []
+    const div = L.DomUtil.create('div', 'oLegend');
+    const medals = [0,200,400,800]
+    // const labels = []
+    div.innerHTML = '<h5>Totals Olympic Medals<br>Won by Country<br>(up to 2016)</h5>'
     for (let i = 0; i < medals.length; i++){
         div.innerHTML +=
             '<i style="background:' + olympicsColor(medals[i] + 1) + '"></i> ' +
@@ -249,7 +248,6 @@ myMap.on('overlayadd', function(eventLayer){
         myMap.addControl(info);
         myMap.addControl(legend);
     } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
-        myMap.addControl(olympicsInfo);
         myMap.addControl(olympicsLegend);
     }
 });
@@ -260,7 +258,6 @@ myMap.on('overlayremove', function(eventLayer){
          myMap.removeControl(info);
          myMap.removeControl(legend);
     } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
-        myMap.removeControl(olympicsInfo);
         myMap.removeControl(olympicsLegend);
     }
 });
