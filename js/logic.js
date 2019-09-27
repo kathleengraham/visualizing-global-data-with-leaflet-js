@@ -156,7 +156,7 @@ const mapOverlay = {
     "<span>&nbsp;&nbsp; Overseas Military Bases &nbsp;&nbsp;<img class='layer-img' src='../images/tank.svg'/></span>": militaryLayer
 };
 
-// load satmap and outline as default
+// load lightmap and winelayer as default
 const myMap = L.map('map', {
     center: [45,0],
     zoom: 3,

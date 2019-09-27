@@ -1,5 +1,5 @@
 # Visualizing Data Across the Globe
-<p align='center'><img src='images/tripleView.jpg'></p><br>
+<p align='center'><img src='images/tripleView.jpg' alt='triple-view-mapbox-layers' width='80%'></p><br>
 
 ## Contributors:
 * Julia Gajda
@@ -24,17 +24,17 @@ FIND THE DATA! This is never as easy as it sounds. We were able to find a PDF co
 
 <br>
 
-#### Extracting Data on Wine Consumption from PDF
+### Extracting Data on Wine Consumption from PDF
 
-We were able to find a PDF containing wine consumption data for 205-2017 from the [Wine Institute](https://www.wineinstitute.org/files/World_Consumption_by_Country_2017.pdf). However, we needed to find a way to convert that data from a PDF into a CSV so we could use it in our code. We used [PDF Element](https://pdf.wondershare.com/how-to/extract-data-from-pdf-form.html) to do just that. The extraction did most of the heavy lifting so there wasn't quite as much cleaning to do in the CSV after that.
+We were able to find a PDF containing wine consumption data for 2015-2017 from the [Wine Institute](https://www.wineinstitute.org/files/World_Consumption_by_Country_2017.pdf). However, we needed to find a way to convert that data from a PDF into a CSV so we could use it in our code. We used [PDF Element](https://pdf.wondershare.com/how-to/extract-data-from-pdf-form.html) to do just that. The extraction did most of the heavy lifting so there wasn't quite as much cleaning to do in the CSV after that.
 
 <br>
 
-#### Web Scraping Data on Total Olympic Medals Won by Country
+### Web Scraping Data on Total Olympic Medals Won by Country
 
-We originally wanted to plot all the Billionaires around the world but ran into some difficulties. Both Forbes and Bloomberg had lists that were nearly impossible to scrape. There was no visible body in the HTML. It was linked to a private directory that we could not access, so we resorted to a different topic - Olympic Medals Won by Country.
+We originally wanted to plot all the billionaires around the world but ran into some difficulties. Both Forbes and Bloomberg had lists that were nearly impossible to scrape. There was no visible body in the HTML. It was linked to a private directory that we could not access, so we resorted to a different topic - Olympic Medals Won by Country.
     
-We were able to scrape the [Olympic medal data](https://www.worldatlas.com/articles/countries-with-the-most-olympic-medals.html). Converting to a CSV directly from Jupyter Notebook was not working properly so we exported to an xlsx file and saved as a CSV.
+We were able to scrape the [Olympic medal data](https://www.worldatlas.com/articles/countries-with-the-most-olympic-medals.html), but converting it to a CSV directly from Jupyter Notebook was not working properly, so we exported to an [.xlsx file](data/olympics.xlsx) and then saved as a CSV before changing it to geojson.
 
 <br>
 
@@ -44,7 +44,7 @@ import pandas as pd
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 
-executable_path = {'executable_path': '/Users/tamaranajjar/Documents/BOOTCAMP/NUCHI201905DATA2/12-Web-Scraping-and-Document-Databases/Homework/chromedriver'}
+executable_path = {'executable_path': '../chromedriver.exe'}
 browser = Browser('chrome', **executable_path, headless=False)
 
 url = 'https://www.worldatlas.com/articles/countries-with-the-most-olympic-medals.html'
@@ -59,7 +59,7 @@ writer.save()
 
 <br>
 
-#### Web Scraping Data on International Military Bases by Country
+### Web Scraping Data on International Military Bases by Country
 
 We were able to scrape [International Military Bases by Country](https://en.wikipedia.org/wiki/List_of_countries_with_overseas_military_bases) data from Wikipedia. This was the most difficult site to scrape because Wikipedia has multiple contributors that can alter the HTML. When inspecting the HTML, we found that not all the countries/bases were in the same div or unordered list so it was difficult to iterate through and return the desired results. We found a suitable workaround but it took quite some time.
 
@@ -82,7 +82,7 @@ We accessed the url and parsed through the HTML with [Beautiful Soup](https://ww
 
 <br>
 
-![gif-of-scraping-countries-with-overseas-bases](images/scrape-countries-with-overseas-bases.gif)
+<p align='center'><img src='images/scrape-countries-with-overseas-bases.gif' alt='gif-of-scraping-countries-with-overseas-bases' width='60%'></p>
 
 <br>
 
@@ -90,7 +90,7 @@ Then with ```.find_next('a')```, we were able to scrape the names of the countri
 
 <br>
 
-![gif-of-scraping-overseas-base-locations](images/scrape-overseas-base-locations.gif)
+<p align='center'><img src='images/scrape-overseas-base-locations.gif' alt='gif-of-scraping-overseas-base-locations' width='60%'></p>
 
 <br>
 
@@ -98,7 +98,7 @@ We turned these two lists into a dataframe with pandas.
 
 <br>
 
-![gif-of-creating-dataframe](images/create-dataframe.gif)
+<p align='center'><img src='images/create-dataframe.gif' alt='gif-of-creating-dataframe' width='60%'></p>
 
 <br>
 
@@ -106,7 +106,8 @@ We inspected the count of overseas bases for each country to check for correctne
 
 <br>
 
-![gif-of-base-count](images/count-of-bases.gif)
+<p align='center'><img src='images/count-of-bases.gif' alt='gif-of-base-count' width='60%'></p>
+
 
 <br>
 
@@ -126,14 +127,17 @@ We discovered that local geojson files don't always work the same as geojson fil
 
 This turned out to give us a lot more control over what was put on our map in three different layers. When we wanted to add more data to the geojson file, we were able to manipulate it using a website called [geojson.io](geojson.io). We added references to the appropriate [latitude and longitude](https://developers.google.com/public-data/docs/canonical/countries_csv), names of bases, and even images of little flag icons that could display in a popup or tooltip. We even [converted to geojson from CSV](https://www.onlinejsonconvert.com/csv-geojson.php).
 
-
+<br>
 
 ## STEP 4: Visualizing with Leaflet.js
 
 [Leaflet.js](https://leafletjs.com/index.html) has become one of our favorite visualization tools. The interactivity is really fun, especially when you get it to work as you envisioned. Reading through [Leaflet's documentation](https://leafletjs.com/reference-1.5.0.html) helped us come up with some even better ways of visualizing multiple layers at once.
 
+### Base Layers
+
 First, we created the base layers through the Mapbox API and included images in the name by adding HTML image tags. The three views we chose were ```mapbox.satellite```, ```mapbox.light```, and ```mapbox.dark```. These layers were added to a layer group variable called ```baseMaps``` and weren't implemented until after all the map overlays were ready to be added to the map.
 
+<br>
 
 ```javascript
 // link to maps with api in config.js
@@ -173,7 +177,7 @@ const baseMaps = {
 
 <br>
 
-![gif-of-three-mapbox-layers](images/mapbox-layers.gif)
+<p align='center'><img src='images/mapbox-layers.gif' alt='gif-of-three-mapbox-layers' width='90%'></p>
 
 <br>
 
@@ -188,7 +192,16 @@ var wineLayer, olympicsLayer, militaryLayer;
 
 <br>
 
+### Map Overlays
+
+Next, we began to create our different layers that would overlap the base layers.
+
+<br>
+
+#### Wine Consumption Layer
+
 Then we created a choropleth layer with Wine Consumption by Country. The first function we made was the ```countryColor()``` function that included a [5-sequence color scheme by Colorbrewer](http://colorbrewer2.org/?type=sequential&scheme=PuBuGn&n=5). This took a little while to get right, but we finally decided on just 5 colors and divided them up from 10<sup vertical-align='super'>2</sup> to 10<sup vertical-align='super'>6</sup>.
+
 <br>
 
 ```javascript
@@ -205,7 +218,9 @@ function countryColor(d) {
 
 <br>
 
-We used the ```countryColor()``` function in the following function for the styling of the features in the ```style(feature)``` function.
+We used the ```countryColor()``` function in the following function for the styling of the features in the ```style(feature)``` function. Originally, we had all the countries and outlines brought to the front when hovering, but we found that this covered the olympic layer markers when both layers were checked, so we decided to go back and comment out that section to figure out a better solution later.
+
+<br>
 
 ```javascript
 
@@ -268,40 +283,35 @@ wineLayer = L.geoJson(wineData, {
 });
 ```
 
-![gif-of-three-geomapping-layers](images/three-layers.gif)
+<br>
+
+<p align='center'><img src='images/three-layers.gif' alt='gif-of-three-geomapping-layers' width='90%'></p>
 
 <br>
 
 We used an info section for wine consumption that updates when hovering over different countries:
 
-![gif-of-info-update-on-hover](images/info-update.gif)
+<br>
+
+<p align='center'><img src='images/info-update.gif' alt='gif-of-info-update-on-hover' width='90%'></p>
 
 <br>
 
 We implemented a click-to-zoom feature of the wine layer:
 
-![gif-of-click-to-zoom-feature](images/click-to-zoom.gif)
+<br>
+
+<p align='center'><img src='images/click-to-zoom.gif' alt='gif-of-click-to-zoom-feature' width='90%'></p>
 
 <br>
 
-We added a tooltip with flag icons, country, medal count, and rank for the olympic layer:
+#### Olympic Medals Layer
 
-![gif-of-olympic-medal-tooltip](images/tooltip.gif)
-
-<br>
-
-And we also added popups with more information for each little tank in the military layer:
-
-![gif-of-military-popup-info](images/popup.gif) 
-
-<br>
-
-More from the logic.js file:
+Then, we moved on to our layer with number of olympic medals won by country.
 
 <br>
 
 ```javascript
-//////////////////////////////////////////// OLYMPIC MEDALS LAYER ///////////////////////////////////////////
 // create markerSize based on number of medals won
 function olympicsSize(m) {
     return m > 1000 ? m*150 :
@@ -317,7 +327,7 @@ function olympicsColor(d) {
         '#EE304D'
 }
 
-// create olympic layer
+// create olympics layer
 olympicsLayer = L.geoJson(olympicsData,{
     pointToLayer:function(feature,latlng){
         return new L.circle(latlng,
@@ -328,8 +338,25 @@ olympicsLayer = L.geoJson(olympicsData,{
             .openTooltip()
     }
 })
+```
 
-/////////////////////////////////////// OVERSEAS MILITARY BASES LAYER //////////////////////////////////////
+<br>
+
+We added a tooltip with flag icons, country, medal count, and rank.
+
+<br>
+
+<p align='center'><img src='images/tooltip.gif' alt='gif-of-olympic-medal-tooltip' width='90%'></p>
+
+<br>
+
+#### Military Bases Layer
+
+Last, we made a simple military bases layer.
+
+<br>
+
+```javascript
 // define tank icon to be used for markers in military layer
 const tankIcon = L.icon({
 	iconUrl: '../images/tank.svg',
@@ -343,30 +370,81 @@ militaryLayer = L.geoJson(militaryData, {
             .bindPopup('<h5>'+feature.properties.country+'</h5>'+feature.properties.base_name, {'className': 'tank-popup'});
 	}
 });
+```
 
-//////////////////////////////////////////////// GENERAL MAP ///////////////////////////////////////////////
+<br>
+
+And we added popups with more information for each little tank icon.
+
+<br>
+
+<p align='center'><img src='images/popup.gif' alt='gif-of-military-popup-info' width='90%'></p>
+
+<br>
+
+#### Combining Overlays
+
+We combined the three layers into a variable called ```mapOverlay```.
+
+<br>
+
+```javascript
 // create overlays
 const mapOverlay = {
     "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>": wineLayer,
     "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>": olympicsLayer,
     "<span>&nbsp;&nbsp; Overseas Military Bases &nbsp;&nbsp;<img class='layer-img' src='../images/tank.svg'/></span>": militaryLayer
 };
+```
 
-// load satmap and outline as default
+<br>
+
+### Creating ```myMap```
+
+Once we had the base layers and the map overlays, we were able to make the map variable ```myMap``` and choose what to load on default. We decided to center the map a little above the equator with a zoom of 3, and we wanted the lightmap base layer and wine layer map overlay to load first.
+
+<br>
+
+```javascript
+// load lightmap and winelayer as default
 const myMap = L.map('map', {
     center: [45,0],
     zoom: 3,
     layers: [lightmap, wineLayer]
 });
+```
+<br>
 
-// add all map layers
+### Specializing with ```L.control``` and Event Listeners
+
+We wanted the map to show more information depending on which layers were shown. Making these different controls appear and disappear at the appropriate time was the biggest challenge when plotting/mapping with Leaflet.js.
+
+<br>
+
+#### Layer Control
+
+We started with the layer control, the section where the user can choose which baselayers or map overlays to observe.
+
+<br>
+
+```javascript
+// add all map layers to contorl div
 const layerDiv = L.control.layers(baseMaps, mapOverlay, {
     collapsed: false
 })
 
 layerDiv.addTo(myMap);
+```
 
-//////////////////////////////////////////// WINE INFO AND LEGEND //////////////////////////////////////////
+<br>
+
+#### Wine Information Div
+
+We wanted users to be able to see the amount of wine in Liters each country consumed whenever hovering over the country.
+
+<br>
+
+```javascript
 // control that shows country info on hover
 let info = L.control({ position: 'bottomleft' });
 
@@ -386,6 +464,17 @@ info.update = function(props) {
 
 // add info div to myMap for wine layer
 info.addTo(myMap);
+```
+
+<br>
+
+#### Wine Consumption Legend
+
+We also made a legend explaining what the range of colors mean for wine consumption.
+
+<br>
+
+```javascript
 
 // create wine legend
 const legend = L.control({position: 'bottomleft'});
@@ -404,8 +493,17 @@ legend.onAdd = function() {
 }
 
 legend.addTo(myMap);
+```
 
-//////////////////////////////////////////// OLYMPICS INFO AND LEGEND //////////////////////////////////////////
+<br>
+
+#### Olympic Medals Legend
+
+Since we added a legend for the wine consumption layer, we thought it'd be best to also add a legend to explain what the marker colors mean for the number of medals in olympic medals layer.
+
+<br>
+
+```javascript
 // create olympic legend
 const olympicsLegend = L.control({position: 'bottomright'});
 
@@ -422,9 +520,17 @@ olympicsLegend.onAdd = function() {
     }
     return div
 }
+```
 
-/////////////////////////////////////// CONTROL DOMUTILS FOR CERTAIN LAYERS  ////////////////////////////////////
-// https://gis.stackexchange.com/a/188341
+<br>
+
+#### Adding and Removing Legends and Information Divs With Layer Additions and Removals 
+
+At this point, we were really proud of our map. But there were some things bothering us. Whenever we would uncheck the wine consumption layer, the information div and the legend for this layer would stay on the screen. Of course, the information div didn't work anymore because the hovering function was taken away with the layer, but we weren't sure how to add this section to the layer itself. So after a little research on [Stack Exchange](https://gis.stackexchange.com/a/188341), we determined adding event listeners to add or remove controls would be best. We were able to make a function that added the controls or removed the controls if the event layer name matched what we had made earlier when declaring the ```mapOverlay``` variable.
+
+<br>
+
+```javascript
 // show info and legend depending on which layer is checked
 myMap.on('overlayadd', function(eventLayer){
     if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>"){
