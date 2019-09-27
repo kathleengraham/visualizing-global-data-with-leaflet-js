@@ -1,11 +1,7 @@
 # Visualizing Data Across the Globe
-
-<p align='center'><img src='images/tripleView.jpg'></p>
-
-<br>
+<p align='center'><img src='images/tripleView.jpg'></p><br>
 
 ## Contributors:
-
 * Julia Gajda
 * Kathleen Graham
 * Tamara Najjar
@@ -13,9 +9,7 @@
 <br>
 
 ## Overview:
-
 Our project was originally inspired by this shortened clip from an episode of [the Newsroom](https://www.youtube.com/watch?v=16K6m3Ua2nw&t=125s). At minute 1:05, the character gives a lot of statistics about the United States compared to the rest of the world.
-
 We wanted a visualization that had three layers on one map that also contained 3 views: light, dark, and satellite. We set out to plot a few popular trends but had trouble getting data, so our final layers included data on wine consumption in Liters, total number of Olympic medals won, and number of overseas military bases. The U.S. is leading in all three of these. Our steps were as follows: 
 
 <br>
@@ -28,6 +22,7 @@ FIND THE DATA! This is never as easy as it sounds. We were able to find a PDF co
 
 ## STEP 2: Cleaning Data After Extracting PDFs and Web Scraping
 
+<br>
 
 #### Extracting Data on Wine Consumption from PDF
 
@@ -39,12 +34,13 @@ We were able to find a PDF containing wine consumption data for 205-2017 from th
 
 We originally wanted to plot all the Billionaires around the world but ran into some difficulties. Both Forbes and Bloomberg had lists that were nearly impossible to scrape. There was no visible body in the HTML. It was linked to a private directory that we could not access, so we resorted to a different topic - Olympic Medals Won by Country.
     
-We were able to scrape the [Olympic medal data](https://www.worldatlas.com/articles/countries-with-the-most-olympic-medals.html) as follows:
+We were able to scrape the [Olympic medal data](https://www.worldatlas.com/articles/countries-with-the-most-olympic-medals.html). Converting to a CSV directly from Jupyter Notebook was not working properly so we exported to an xlsx file and saved as a CSV.
+
+<br>
 
 ```python
 import requests
 import pandas as pd
-
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
 
@@ -61,56 +57,64 @@ df.to_excel(writer, sheet_name='List')
 writer.save()
 ```
 
-
-Converting to a CSV directly from Jupyter Notebook was not working properly so we exported to an xlsx file and saved as a CSV.
-
 <br>
 
 #### Web Scraping Data on International Military Bases by Country
 
-We were able to scrape [International Military Bases by Country](https://en.wikipedia.org/wiki/List_of_countries_with_overseas_military_bases) data from Wikipedia. This was the most difficult site to scrape because Wikipedia has multiple contributors that can alter the HTML. When inspecting the HTML, we found that not all the countries/bases were in the same div or unordered list so it was difficult to iterate through and return the desired results. We found a suitable workaround but it took quite some time. We found a common element, a span containing the flag images, between the elements we wanted. Then we attempted to work our way back with Beautiful Soup's ```.parent``` to get the names of the countries that had overseas bases and then with ```.find_next('a')``` to get the names of the countries where the overseas bases are.
+We were able to scrape [International Military Bases by Country](https://en.wikipedia.org/wiki/List_of_countries_with_overseas_military_bases) data from Wikipedia. This was the most difficult site to scrape because Wikipedia has multiple contributors that can alter the HTML. When inspecting the HTML, we found that not all the countries/bases were in the same div or unordered list so it was difficult to iterate through and return the desired results. We found a suitable workaround but it took quite some time.
+
+We set up our [military bases Jupyter notebook file](data/military_bases.ipynb).
+
+<br>
 
 ```python
 import requests
 import pandas as pd
-
 from splinter import Browser
 from bs4 import BeautifulSoup as bs
-
-executable_path = {'executable_path': '/Users/tamaranajjar/Documents/BOOTCAMP/NUCHI201905DATA2/12-Web-Scraping-and-Document-Databases/Homework/chromedriver'}
+executable_path = {'executable_path': '../chromedriver.exe'}
 browser = Browser('chrome', **executable_path, headless=False)
+```
 
-url = "https://en.wikipedia.org/wiki/List_of_countries_with_overseas_military_bases"
-countries = []
-browser.visit(url)
-soup = bs(browser.html, 'html.parser')
+<br>
 
-country = []
-for span in soup.find_all('span',class_='flagicon'):
-    country.append(span.parent.parent.find_previous('h2').find_next('span').text)
+We accessed the url and parsed through the HTML with [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/bs4/doc/#). We found a common element, a span containing the flag images, between the elements we wanted. Then we attempted to work our way back with ```.parent``` to get the names of the countries that had overseas bases, deleting the last parent element with ```.pop()``` because it was not actually one of the countries.
 
-base = []
-for i in range(1,18):
-    list_of_lis = soup.find_all('span', class_='mw-headline')[i].parent.find_next('ul').find_all('li')
-    for li in list_of_lis:
-        base.append(li.next.find_next('a').text)
+<br>
 
-country.pop()
-base.pop(56)
+![gif-of-scraping-countries-with-overseas-bases](images/scrape-countries-with-overseas-bases.gif)
 
-base.append('Tunisia')
-base.append('Turkey')
-base.append('United Arab Emirates')
-base.append('United Kingdom')
-base[56] = 'Qatar'
-base.insert(57,'Somalia')
-base.insert(58,'Syria')
+<br>
 
-military_base_df = pd.DataFrame(list(zip(country,base)),columns=['Country','Overseas Base'])
-military_base_df
+Then with ```.find_next('a')```, we were able to scrape the names of the countries where the overseas bases are located. There were some special cases, such as with the unordered list on Turkey's overseas bases, that had lists of lists, so we had to clean up the data by appending and inserting base name where appropriate.
 
-military_base_df.groupby('Country').nunique()
+<br>
 
+![gif-of-scraping-overseas-base-locations](images/scrape-overseas-base-locations.gif)
+
+<br>
+
+We turned these two lists into a dataframe with pandas.
+
+<br>
+
+![gif-of-creating-dataframe](images/create-dataframe.gif)
+
+<br>
+
+We inspected the count of overseas bases for each country to check for correctness.
+
+<br>
+
+![gif-of-base-count](images/count-of-bases.gif)
+
+<br>
+
+Last in scraping for overseas bases, we saved to a CSV file. Not every base had a name or any other details, so more information about each military base would have to be added manually if we wanted correct data that had special cases.
+
+<br>
+
+```python
 military_base_df.to_csv('military_bases.csv')
 ```
 
@@ -122,7 +126,7 @@ We discovered that local geojson files don't always work the same as geojson fil
 
 This turned out to give us a lot more control over what was put on our map in three different layers. When we wanted to add more data to the geojson file, we were able to manipulate it using a website called [geojson.io](geojson.io). We added references to the appropriate [latitude and longitude](https://developers.google.com/public-data/docs/canonical/countries_csv), names of bases, and even images of little flag icons that could display in a popup or tooltip. We even [converted to geojson from CSV](https://www.onlinejsonconvert.com/csv-geojson.php).
 
-<br>
+
 
 ## STEP 4: Visualizing with Leaflet.js
 
@@ -130,7 +134,6 @@ This turned out to give us a lot more control over what was put on our map in th
 
 First, we created the base layers through the Mapbox API and included images in the name by adding HTML image tags. The three views we chose were ```mapbox.satellite```, ```mapbox.light```, and ```mapbox.dark```. These layers were added to a layer group variable called ```baseMaps``` and weren't implemented until after all the map overlays were ready to be added to the map.
 
-<br>
 
 ```javascript
 // link to maps with api in config.js
@@ -186,7 +189,6 @@ var wineLayer, olympicsLayer, militaryLayer;
 <br>
 
 Then we created a choropleth layer with Wine Consumption by Country. The first function we made was the ```countryColor()``` function that included a [5-sequence color scheme by Colorbrewer](http://colorbrewer2.org/?type=sequential&scheme=PuBuGn&n=5). This took a little while to get right, but we finally decided on just 5 colors and divided them up from 10<sup vertical-align='super'>2</sup> to 10<sup vertical-align='super'>6</sup>.
-
 <br>
 
 ```javascript
