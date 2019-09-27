@@ -38,9 +38,6 @@ var wineLayer, olympicsLayer, militaryLayer;
 
 //////////////////////////////////////////// WINE CONSUMPTION LAYER ///////////////////////////////////////////
 // set countryColor based on consumption of wine
-// color choices from http://colorbrewer2.org/?type=sequential&scheme=Purples&n=5
-
-// blues
 function countryColor(d) {
     return d > 1000000 ? '#016c59' :
         d > 100000 ? '#1c9099' :

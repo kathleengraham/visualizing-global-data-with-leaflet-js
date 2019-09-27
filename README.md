@@ -2,39 +2,38 @@
 
 <p align='center'><img src='images/tripleView.jpg'></p>
 
-<br><br>
+<br>
 
 ## Contributors:
 
 * Julia Gajda
 * Kathleen Graham
 * Tamara Najjar
-  
-<br><br>
+
+<br>
 
 ## Overview:
 
-For this project, we focused on plotting some popular global trends such as wine consumption, Olympic medals won, and international military bases by country. We were originally inspired by this shortened clip from an episode of [the Newsroom](https://www.youtube.com/watch?v=16K6m3Ua2nw&t=125s). At 1:05, the character gives a lot of statistics about the United States compared to the rest of the world.
+Our project was originally inspired by this shortened clip from an episode of [the Newsroom](https://www.youtube.com/watch?v=16K6m3Ua2nw&t=125s). At minute 1:05, the character gives a lot of statistics about the United States compared to the rest of the world.
 
-We wanted a visualization that had three layers on one map that also contained 3 views: light, dark, and satellite. Our steps were as follows: 
+We wanted a visualization that had three layers on one map that also contained 3 views: light, dark, and satellite. We set out to plot a few popular trends but had trouble getting data, so our final layers included data on wine consumption in Liters, total number of Olympic medals won, and number of overseas military bases. The U.S. is leading in all three of these. Our steps were as follows: 
 
-<br><br>
+<br>
 
 ## STEP 1: Finding Data
 
-FIND THE DATA! This is never as easy as it sounds. We were able to find a PDF containing wine consumption data and a few different sites of Olympic medal and international military bases data that we could scrape. Throughout the course of this project, we came across more and more helpful resources. Each resource will be referenced at the appropriate step.
+FIND THE DATA! This is never as easy as it sounds. We were able to find a PDF containing wine consumption data and a few different sites on Olympic medal and international military bases data that we could scrape. Throughout the course of this project, we came across more and more helpful resources. Each resource will be referenced at the appropriate step.
 
-<br><br>
+<br>
 
 ## STEP 2: Cleaning Data After Extracting PDFs and Web Scraping
 
-<br><br>
 
 #### Extracting Data on Wine Consumption from PDF
 
 We were able to find a PDF containing wine consumption data for 205-2017 from the [Wine Institute](https://www.wineinstitute.org/files/World_Consumption_by_Country_2017.pdf). However, we needed to find a way to convert that data from a PDF into a CSV so we could use it in our code. We used [PDF Element](https://pdf.wondershare.com/how-to/extract-data-from-pdf-form.html) to do just that. The extraction did most of the heavy lifting so there wasn't quite as much cleaning to do in the CSV after that.
 
-<br><br>
+<br>
 
 #### Web Scraping Data on Total Olympic Medals Won by Country
 
@@ -62,9 +61,10 @@ df.to_excel(writer, sheet_name='List')
 writer.save()
 ```
 
+
 Converting to a CSV directly from Jupyter Notebook was not working properly so we exported to an xlsx file and saved as a CSV.
 
-<br><br>
+<br>
 
 #### Web Scraping Data on International Military Bases by Country
 
@@ -114,63 +114,25 @@ military_base_df.groupby('Country').nunique()
 military_base_df.to_csv('military_bases.csv')
 ```
 
-<br><br>
+<br>
 
-## STEP 3: Geojsonifying with geojson.io
+## STEP 3: Converting to Geojson
 
-We discovered that local geojson files don't always work the same as geojson files accessed through a link to the file on the web. Through the [Leaflet Choropleth tutorial](https://leafletjs.com/examples/choropleth/), we were able to figure out how to add to our HTML a script with a variable of the geojson data. We then used that variable to create our geojson layer on our map.
+We discovered that local geojson files don't always work the same as geojson files accessed through a link to the file on the web. Through the [Leaflet Choropleth tutorial](https://leafletjs.com/examples/choropleth/), we were able to figure out how to add to our HTML a script with a variable of the [geojson data for the outlines of all the countries in the world](https://raw.githubusercontent.com/tetrahedra/worldmap/master/countries.geo.json). We then used that variable to create our geojson layer of our [logic.js](js/logic.js) file.
 
-This turned out to give us a lot more control over what was put on our map in three different layers. When we wanted to add more data to the geojson file, we were able to manipulate it using a website called [geojson.io](geojson.io). We added references to the appropriate latitude and longitude, names of bases, and even images of little flag icons that could display in a popup or tooltip.
+This turned out to give us a lot more control over what was put on our map in three different layers. When we wanted to add more data to the geojson file, we were able to manipulate it using a website called [geojson.io](geojson.io). We added references to the appropriate [latitude and longitude](https://developers.google.com/public-data/docs/canonical/countries_csv), names of bases, and even images of little flag icons that could display in a popup or tooltip. We even [converted to geojson from CSV](https://www.onlinejsonconvert.com/csv-geojson.php).
 
-We used the following site to get the lat & lng: https://developers.google.com/public-data/docs/canonical/countries_csv. Once our CSVs were ready, we used the following site to convert our CSVs into geojson files: https://www.onlinejsonconvert.com/csv-geojson.php. For the wine consumption data, we were able to find a geojson file that contained the outline coordinates of each country so we used that. We found that geojson file here: https://raw.githubusercontent.com/tetrahedra/worldmap/master/countries.geo.json
-
-<br><br>
+<br>
 
 ## STEP 4: Visualizing with Leaflet.js
 
-Leaflet.js has become one of our favorite visualization tools. The interactivity is really fun when you can get it to work how you envisioned. Reading through documentation helped us come up with some even better ways of visualizing multiple layers at once.
+[Leaflet.js](https://leafletjs.com/index.html) has become one of our favorite visualization tools. The interactivity is really fun, especially when you get it to work as you envisioned. Reading through [Leaflet's documentation](https://leafletjs.com/reference-1.5.0.html) helped us come up with some even better ways of visualizing multiple layers at once.
 
-Here are the three layers access through the MapBox API:
-
-![gif-of-three-mapbox-layers](images/mapbox-layers.gif)
+First, we created the base layers through the Mapbox API and included images in the name by adding HTML image tags. The three views we chose were ```mapbox.satellite```, ```mapbox.light```, and ```mapbox.dark```. These layers were added to a layer group variable called ```baseMaps``` and weren't implemented until after all the map overlays were ready to be added to the map.
 
 <br>
-
-Here are our three layers you can show all at once or one at a time:
-
-![gif-of-three-geomapping-layers](images/three-layers.gif)
-
-<br>
-
-We used an info section for wine consumption that updates when hovering over different countries:
-
-![gif-of-info-update-on-hover](images/info-update.gif)
-
-<br>
-
-We implemented a click-to-zoom feature of the wine layer:
-
-![gif-of-click-to-zoom-feature](images/click-to-zoom.gif)
-
-<br>
-
-We added a tooltip with flag icons, country, medal count, and rank for the olympic layer:
-
-![gif-of-olympic-medal-tooltip](images/tooltip.gif)
-
-<br>
-
-And we also added popups with more information for each little tank in the military layer:
-
-![gif-of-military-popup-info](images/popup.gif) 
-
-<br>
-
-
-The above features are shown below in the complete logic file:
 
 ```javascript
-//////////////////////////////////////////////// BASEMAP LAYERS ///////////////////////////////////////////////
 // link to maps with api in config.js
 const mapboxLink = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
 
@@ -204,33 +166,46 @@ const baseMaps = {
     "<span>&nbsp;&nbsp; Light Map &nbsp;&nbsp;<img class='layer-img' src='../images/lightmap.jpg'/></span>": lightmap,
     "<span>&nbsp;&nbsp; Dark Map &nbsp;&nbsp;<img class='layer-img' src='../images/darkmap.jpg'/></span>": darkmap
 };
+```
 
+<br>
+
+![gif-of-three-mapbox-layers](images/mapbox-layers.gif)
+
+<br>
+
+Later, we came back to this point in our logic.js file and added variables for our layers before any functions because we kept getting errors in the console about layers not being defined yet. This was the best place to create them all at once.
+
+<br>
+
+```javascript
 // make variables for mapOverlay layers to adjust later
 var wineLayer, olympicsLayer, militaryLayer;
+```
 
-//////////////////////////////////////////// WINE CONSUMPTION LAYER ///////////////////////////////////////////
+<br>
+
+Then we created a choropleth layer with Wine Consumption by Country. The first function we made was the ```countryColor()``` function that included a [5-sequence color scheme by Colorbrewer](http://colorbrewer2.org/?type=sequential&scheme=PuBuGn&n=5). This took a little while to get right, but we finally decided on just 5 colors and divided them up from 10<sup vertical-align='super'>2</sup> to 10<sup vertical-align='super'>6</sup>.
+
+<br>
+
+```javascript
 // set countryColor based on consumption of wine
-// color choices from http://colorbrewer2.org/?type=sequential&scheme=Purples&n=5
-
-// blues
-// function countryColor(d) {
-//     return d > 1000000 ? '#016c59' :
-//         d > 100000 ? '#1c9099' :
-//         d > 10000 ? '#67a9cf' :
-//         d > 1000 ? '#bdc9e1' :
-//         d > 100 ? '#f6eff7' :
-//         'white';
-// }
-
-// purples
 function countryColor(d) {
-    return d > 1000000 ? '#54278f' :
-        d > 100000 ? '#756bb1' :
-        d > 10000 ? '#9e9ac8' :
-        d > 1000 ? '#cbc9e2' :
-        d > 100 ? '#f2f0f7' :
+    return d > 1000000 ? '#016c59' :
+        d > 100000 ? '#1c9099' :
+        d > 10000 ? '#67a9cf' :
+        d > 1000 ? '#bdc9e1' :
+        d > 100 ? '#f6eff7' :
         'white';
 }
+```
+
+<br>
+
+We used the ```countryColor()``` function in the following function for the styling of the features in the ```style(feature)``` function.
+
+```javascript
 
 // fxn for filling in the countries
 function style(feature) {
@@ -289,7 +264,41 @@ wineLayer = L.geoJson(wineData, {
     style: style,
     onEachFeature: onEachFeature
 });
+```
 
+![gif-of-three-geomapping-layers](images/three-layers.gif)
+
+<br>
+
+We used an info section for wine consumption that updates when hovering over different countries:
+
+![gif-of-info-update-on-hover](images/info-update.gif)
+
+<br>
+
+We implemented a click-to-zoom feature of the wine layer:
+
+![gif-of-click-to-zoom-feature](images/click-to-zoom.gif)
+
+<br>
+
+We added a tooltip with flag icons, country, medal count, and rank for the olympic layer:
+
+![gif-of-olympic-medal-tooltip](images/tooltip.gif)
+
+<br>
+
+And we also added popups with more information for each little tank in the military layer:
+
+![gif-of-military-popup-info](images/popup.gif) 
+
+<br>
+
+More from the logic.js file:
+
+<br>
+
+```javascript
 //////////////////////////////////////////// OLYMPIC MEDALS LAYER ///////////////////////////////////////////
 // create markerSize based on number of medals won
 function olympicsSize(m) {
@@ -434,7 +443,8 @@ myMap.on('overlayremove', function(eventLayer){
     }
 });
 ```
-<br><br>
+
+<br>
 
 ## NEXT STEPS:
 
@@ -446,7 +456,7 @@ We would love to extend this project in the future to include the following cons
 * adding flag icons instead of circle markers for the olympic layer
 * using a database to get real time data on other trends that change more frequently, such as current billionaires around the world 
 
-<br><br>
+<br>
 
 ## More things to learn:
 
@@ -455,7 +465,7 @@ As with any project, the scope changed and we learned a lot! But we also learned
 * the difference between ```this._div.innerHTML``` and ```div.innerHTML``` (we are currently assuming that the first refers to the current div created through L.control in Leaflet and the second is a div that was created inside a function by the programmer).
 * differences between and pros/cons of D3 and Leaflet for certain types of plotting.
 
-<br><br>
+<br>
 
 ## Conclusion:
 
