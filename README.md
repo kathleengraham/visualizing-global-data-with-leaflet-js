@@ -1,5 +1,5 @@
 # Visualizing Data Across the Globe
-<p align='center'><img src='images/tripleView.jpg' alt='triple-view-mapbox-layers' width='80%'></p><br>
+<p align='center'><img src='images/readme-images/final-screenshot.jpg' alt='final-site-screenshot' width='80%'></p><br>
 
 ## Contributors:
 * Julia Gajda
@@ -9,8 +9,9 @@
 <br>
 
 ## Overview:
-Our project was originally inspired by this shortened clip from an episode of [the Newsroom](https://www.youtube.com/watch?v=16K6m3Ua2nw&t=125s). At minute 1:05, the character gives a lot of statistics about the United States compared to the rest of the world.
-We wanted a visualization that had three layers on one map that also contained 3 views: light, dark, and satellite. We set out to plot a few popular trends but had trouble getting data, so our final layers included data on wine consumption in Liters, total number of Olympic medals won, and number of overseas military bases. The U.S. is leading in all three of these. Our steps were as follows: 
+Our project was originally inspired by this shortened clip from an episode of [the Newsroom](https://www.youtube.com/watch?v=16K6m3Ua2nw&t=69s). At the 1:09 minute mark, the character gives a lot of statistics about the United States compared to the rest of the world. His expressions certainly are abrasive, but he makes some interesting points about factual information. There is no such thing as perfect data, but we thought we'd take a closer look at a few of the statistics he discussed. Eventually, we decided plotting information related to military around the world would be especially interesting. We also wanted to plot about food or some other consumer product and any other trending topic, such as billionaires around the world.
+
+We wanted a visualization that had three layers on one map that also contained 3 views: light, dark, and satellite. After researching our chosen topics, we had trouble getting data, so our final layers include data on wine consumption in Liters by country, total number of Olympic medals won, and number of overseas military bases. The U.S. is leading in all three of these, which we did not originally know about wine consumption. Our steps were as follows: 
 
 <br>
 
@@ -82,7 +83,7 @@ We accessed the url and parsed through the HTML with [Beautiful Soup](https://ww
 
 <br>
 
-<p align='center'><img src='images/scrape-countries-with-overseas-bases.gif' alt='gif-of-scraping-countries-with-overseas-bases' width='60%'></p>
+<p align='center'><img src='images/readme-images/scrape-countries-with-overseas-bases.gif' alt='gif-of-scraping-countries-with-overseas-bases' width='60%'></p>
 
 <br>
 
@@ -90,7 +91,7 @@ Then with ```.find_next('a')```, we were able to scrape the names of the countri
 
 <br>
 
-<p align='center'><img src='images/scrape-overseas-base-locations.gif' alt='gif-of-scraping-overseas-base-locations' width='60%'></p>
+<p align='center'><img src='images/readme-images/scrape-overseas-base-locations.gif' alt='gif-of-scraping-overseas-base-locations' width='60%'></p>
 
 <br>
 
@@ -98,7 +99,7 @@ We turned these two lists into a dataframe with pandas.
 
 <br>
 
-<p align='center'><img src='images/create-dataframe.gif' alt='gif-of-creating-dataframe' width='60%'></p>
+<p align='center'><img src='images/readme-images/create-dataframe.gif' alt='gif-of-creating-dataframe' width='60%'></p>
 
 <br>
 
@@ -106,7 +107,7 @@ We inspected the count of overseas bases for each country to check for correctne
 
 <br>
 
-<p align='center'><img src='images/count-of-bases.gif' alt='gif-of-base-count' width='60%'></p>
+<p align='center'><img src='images/readme-images/count-of-bases.gif' alt='gif-of-base-count' width='60%'></p>
 
 
 <br>
@@ -177,7 +178,7 @@ const baseMaps = {
 
 <br>
 
-<p align='center'><img src='images/mapbox-layers.gif' alt='gif-of-three-mapbox-layers' width='90%'></p>
+<p align='center'><img src='images/readme-images/mapbox-layers.gif' alt='gif-of-three-mapbox-layers' width='90%'></p>
 
 <br>
 
@@ -285,7 +286,7 @@ wineLayer = L.geoJson(wineData, {
 
 <br>
 
-<p align='center'><img src='images/three-layers.gif' alt='gif-of-three-geomapping-layers' width='90%'></p>
+<p align='center'><img src='images/readme-images/three-layers.gif' alt='gif-of-three-geomapping-layers' width='90%'></p>
 
 <br>
 
@@ -293,7 +294,7 @@ We used an info section for wine consumption that updates when hovering over dif
 
 <br>
 
-<p align='center'><img src='images/info-update.gif' alt='gif-of-info-update-on-hover' width='90%'></p>
+<p align='center'><img src='images/readme-images/info-update.gif' alt='gif-of-info-update-on-hover' width='90%'></p>
 
 <br>
 
@@ -301,7 +302,7 @@ We implemented a click-to-zoom feature of the wine layer:
 
 <br>
 
-<p align='center'><img src='images/click-to-zoom.gif' alt='gif-of-click-to-zoom-feature' width='90%'></p>
+<p align='center'><img src='images/readme-images/click-to-zoom.gif' alt='gif-of-click-to-zoom-feature' width='90%'></p>
 
 <br>
 
@@ -346,7 +347,7 @@ We added a tooltip with flag icons, country, medal count, and rank.
 
 <br>
 
-<p align='center'><img src='images/tooltip.gif' alt='gif-of-olympic-medal-tooltip' width='90%'></p>
+<p align='center'><img src='images/readme-images/tooltip.gif' alt='gif-of-olympic-medal-tooltip' width='90%'></p>
 
 <br>
 
@@ -378,7 +379,7 @@ And we added popups with more information for each little tank icon.
 
 <br>
 
-<p align='center'><img src='images/popup.gif' alt='gif-of-military-popup-info' width='90%'></p>
+<p align='center'><img src='images/readme-images/popup.gif' alt='gif-of-military-popup-info' width='90%'></p>
 
 <br>
 
