@@ -90,7 +90,7 @@ function zoomToFeature(e) {
 }
 
 // fxn to bring all previous feature fxns together
-function onEachFeature(feature, layer) {
+function onEachFeature(layer) {
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
@@ -99,7 +99,7 @@ function onEachFeature(feature, layer) {
 }
 
 // create wine layer that includes styling on three features:
-// highlight and resethighlight when hovering, and click to zoom
+// highlight and resethighlight when hovering or not, and click to zoom
 wineLayer = L.geoJson(wineData, {
     style: style,
     onEachFeature: onEachFeature
@@ -114,10 +114,10 @@ function olympicsSize(m) {
         m*1000
 }
 
-function olympicsColor(d) {
-    return d > 800 ? '#FBB32E' :
-        d > 400 ? '#0186C3' :
-        d > 200 ? '#158C39' :
+function olympicsColor(m) {
+    return m > 800 ? '#FBB32E' :
+        m > 400 ? '#0186C3' :
+        m > 200 ? '#158C39' :
         '#EE304D'
 }
 
@@ -152,7 +152,7 @@ militaryLayer = L.geoJson(militaryData, {
 // create overlays
 const mapOverlay = {
     "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>": wineLayer,
-    "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>": olympicsLayer,
+    "<span>&nbsp;&nbsp; Summer Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>": olympicsLayer,
     "<span>&nbsp;&nbsp; Overseas Military Bases &nbsp;&nbsp;<img class='layer-img' src='../images/tank.svg'/></span>": militaryLayer
 };
 
@@ -218,7 +218,7 @@ olympicsLegend.onAdd = function() {
     const div = L.DomUtil.create('div', 'oLegend');
     const medals = [0,200,400,800]
     // const labels = []
-    div.innerHTML = '<h5>Totals Olympic Medals<br>Won by Country<br>(up to 2016)</h5>'
+    div.innerHTML = '<h5>Total Summer Olympic Medals<br>Won by Country<br>(up to 2016)</h5>'
     for (let i = 0; i < medals.length; i++){
         div.innerHTML +=
             '<i style="background:' + olympicsColor(medals[i] + 1) + '"></i> ' +
@@ -234,7 +234,7 @@ myMap.on('overlayadd', function(eventLayer){
     if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>"){
         myMap.addControl(info);
         myMap.addControl(legend);
-    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
+    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Summer Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
         myMap.addControl(olympicsLegend);
     }
 });
@@ -244,7 +244,7 @@ myMap.on('overlayremove', function(eventLayer){
     if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>"){
          myMap.removeControl(info);
          myMap.removeControl(legend);
-    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
+    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Summer Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
         myMap.removeControl(olympicsLegend);
     }
 });

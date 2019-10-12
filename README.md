@@ -31,9 +31,9 @@ We were able to find a PDF containing wine consumption data for 2015-2017 from t
 
 <br>
 
-### Web Scraping Data on Total Olympic Medals Won by Country
+### Web Scraping Data on Total Summer Olympic Medals Won by Country
 
-We originally wanted to plot all the billionaires around the world but ran into some difficulties. Both Forbes and Bloomberg had lists that were nearly impossible to scrape. There was no visible body in the HTML. It was linked to a private directory that we could not access, so we resorted to a different topic - Olympic Medals Won by Country.
+We originally wanted to plot all the billionaires around the world but ran into some difficulties. Both Forbes and Bloomberg had lists that were nearly impossible to scrape. There was no visible body in the HTML. It was linked to a private directory that we could not access, so we resorted to a different topic - Summer Olympic Medals Won by Country.
     
 We were able to scrape the [Olympic medal data](https://www.worldatlas.com/articles/countries-with-the-most-olympic-medals.html), but converting it to a CSV directly from Jupyter Notebook was not working properly, so we exported to an [.xlsx file](data/olympics.xlsx) and then saved as a CSV before changing it to geojson.
 
@@ -103,7 +103,7 @@ We turned these two lists into a dataframe with pandas.
 
 <br>
 
-We inspected the count of overseas bases for each country to check for correctness.
+To check for correctness, we inspected the count of overseas bases for each country.
 
 <br>
 
@@ -112,7 +112,7 @@ We inspected the count of overseas bases for each country to check for correctne
 
 <br>
 
-Last in scraping for overseas bases, we saved to a CSV file. Not every base had a name or any other details, so more information about each military base would have to be added manually if we wanted correct data that had special cases.
+Finally, we saved to a CSV file. Not every base had a name or any other details, so later we went back and manually added more information about each military base since we wanted correct data for all bases, not just the bases with the most information available.
 
 <br>
 
@@ -126,7 +126,7 @@ military_base_df.to_csv('military_bases.csv')
 
 We discovered that local geojson files don't always work the same as geojson files accessed through a link to the file on the web. Through the [Leaflet Choropleth tutorial](https://leafletjs.com/examples/choropleth/), we were able to figure out how to add to our HTML a script with a variable of the [geojson data for the outlines of all the countries in the world](https://raw.githubusercontent.com/tetrahedra/worldmap/master/countries.geo.json). We then used that variable to create our geojson layer of our [logic.js](js/logic.js) file.
 
-This turned out to give us a lot more control over what was put on our map in three different layers. When we wanted to add more data to the geojson file, we were able to manipulate it using a website called [geojson.io](geojson.io). We added references to the appropriate [latitude and longitude](https://developers.google.com/public-data/docs/canonical/countries_csv), names of bases, and even images of little flag icons that could display in a popup or tooltip. We even [converted to geojson from CSV](https://www.onlinejsonconvert.com/csv-geojson.php).
+This turned out to give us a lot more control over what was put on our map in three different layers. When we wanted to add more data to the geojson file, we were able to manipulate it using a website called [geojson.io](http://geojson.io/#map=2/20.0/0.0). We added references to the appropriate [latitude and longitude](https://developers.google.com/public-data/docs/canonical/countries_csv), names of bases, and even images of little flag icons that could display in a popup or tooltip. We even [converted to geojson from CSV](https://www.onlinejsonconvert.com/csv-geojson.php).
 
 <br>
 
@@ -201,7 +201,7 @@ Next, we began to create our different layers that would overlap the base layers
 
 #### Wine Consumption Layer
 
-Then we created a choropleth layer with Wine Consumption by Country. The first function we made was the ```countryColor()``` function that included a [5-sequence color scheme by Colorbrewer](http://colorbrewer2.org/?type=sequential&scheme=PuBuGn&n=5). This took a little while to get right, but we finally decided on just 5 colors and divided them up from 10<sup vertical-align='super'>2</sup> to 10<sup vertical-align='super'>6</sup>.
+Our first map overlay was a choropleth layer with Wine Consumption by Country, and the first function we made was the ```countryColor()``` function that included a [5-sequence color scheme by Colorbrewer](http://colorbrewer2.org/?type=sequential&scheme=PuBuGn&n=5). This took a little while to get right, but we finally decided on just 5 colors and divided them up from 10<sup vertical-align='super'>2</sup> to 10<sup vertical-align='super'>6</sup>.
 
 <br>
 
@@ -219,7 +219,7 @@ function countryColor(d) {
 
 <br>
 
-We used the ```countryColor()``` function in the following function for the styling of the features in the ```style(feature)``` function. Originally, we had all the countries and outlines brought to the front when hovering, but we found that this covered the olympic layer markers when both layers were checked, so we decided to go back and comment out that section to figure out a better solution later.
+We used the ```countryColor()``` function in the following function for the styling of the features in ```style(feature)```. Originally, we had all the countries and outlines brought to the front when hovering, as shown in the ```highlightFeature(e)``` function, but we found that this covered the olympic layer markers when both layers were checked. Eventually, we decided to go back and comment out the section of this function that brings it to the front until we can figure out a better solution later. This messes up the borders of the countries when highlighting, but it's not as noticable as not being able to look at all the data at once when selecting all layers. Whenever we fix this function in the future, the ```resetHighlight(e)``` function will work exactly as it should, just reset whatever was in ```highlightFeature(e)```. These functions also update the ```info``` legend with more information depending on what country is being hovered over and highlighted. The legend was made later, and I'm still confused
 
 <br>
 
@@ -261,23 +261,57 @@ function resetHighlight(e) {
     wineLayer.resetStyle(e.target);
     info.update();
 }
+```
 
+<br>
+
+<p align='center'><img src='images/readme-images/info-update.gif' alt='gif-of-info-update-on-hover' width='90%'></p>
+
+<br>
+
+One of our favorite functions we found in Leaflet's documentation was ```zoomToFeature(e)```. This is boilerplate, but it's so cool to include it and see it in action!
+
+<br>
+
+```javascript
 // fxn to zoom in to each country once clicked
 function zoomToFeature(e) {
     myMap.fitBounds(e.target.getBounds());
 }
+```
 
+<br>
+
+<p align='center'><img src='images/readme-images/click-to-zoom.gif' alt='gif-of-click-to-zoom-feature' width='90%'></p>
+
+<br>
+
+Our last function is important because it's what brings all these features together. The name was given in Leaflet's documentation for [onEachFeature()](https://leafletjs.com/reference-1.5.0.html#geojson-oneachfeature), but we only included the parameters and functions inside that we wanted. Our only parameter is ```layer```. Even though we're only using this function on one specific layer, ```wineLayer```, we wanted to allow the function to be used on other layers that would have the same functionality if we decided to extend this project to include more data points (such as multiple layers for the years of data we have besides 2017).
+
+The event listener ```layer.on()``` combines our three functions (```highlightFeature```, ```resetHighlight```, and ```zoomToFeature```) so that upon hovering over a country (```mouseover```), it hightlights; upon ```mouseout```, it resets; and upon clicking (```click```), the map will zoom in on the country that was clicked.
+
+<br>
+
+```javascript
 // fxn to bring all previous feature fxns together
-function onEachFeature(feature, layer) {
+function onEachFeature(layer) {
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
         click: zoomToFeature
     });
 }
+```
 
+<br>
+
+Last for this layer, we created the layer itself using [```L.geoJson```](https://leafletjs.com/reference-1.5.0.html#geojson-l-geojson) and referencing ```wineData``` as the first parameter. As mentioned briefly before, this was our GeoJSON data for wine consumption saved as a [single variable in .js format](js/winegeojson.js) that could then be called in our index.html. The second parameter when creating this layer included just two main functions ```style``` and ```onEachFeature```.
+
+<br>
+
+```javascript
 // create wine layer that includes styling on three features:
-// highlight and resethighlight when hovering, and click to zoom
+// highlight and resethighlight when hovering or not, and click to zoom
 wineLayer = L.geoJson(wineData, {
     style: style,
     onEachFeature: onEachFeature
@@ -286,29 +320,11 @@ wineLayer = L.geoJson(wineData, {
 
 <br>
 
-<p align='center'><img src='images/readme-images/three-layers.gif' alt='gif-of-three-geomapping-layers' width='90%'></p>
+#### Summer Olympic Medals Layer
 
-<br>
+Next, we moved to our layer with the total number of summer olympic medals won by country. This layer was less complicated because we just wanted colorful circle markers for each country that could be hovered over to show a Tooltip.
 
-We used an info section for wine consumption that updates when hovering over different countries:
-
-<br>
-
-<p align='center'><img src='images/readme-images/info-update.gif' alt='gif-of-info-update-on-hover' width='90%'></p>
-
-<br>
-
-We implemented a click-to-zoom feature of the wine layer:
-
-<br>
-
-<p align='center'><img src='images/readme-images/click-to-zoom.gif' alt='gif-of-click-to-zoom-feature' width='90%'></p>
-
-<br>
-
-#### Olympic Medals Layer
-
-Then, we moved on to our layer with number of olympic medals won by country.
+We started with the function ```olympicsSize(m)``` to take in the medal count as its parameter and make the size of the marker based on that. When comparing the circle sizes for the United States (rank 1) and Sweden (rank 9), we can see that Sweden's circle is about the same size even though they have significantly fewer medals (only shown by the difference in color and the Tooltips). We believe this is because of the unavoidable map distortion when using the [Mercator projection](https://en.wikipedia.org/wiki/Mercator_projection).
 
 <br>
 
@@ -320,14 +336,30 @@ function olympicsSize(m) {
         m > 100 ? m*500 :
         m*1000
 }
+```
 
-function olympicsColor(d) {
-    return d > 800 ? '#FBB32E' :
-        d > 400 ? '#0186C3' :
-        d > 200 ? '#158C39' :
+<br>
+
+We made the ```olympicsColor(m)``` function with the same parameter, medal count, to choose the color of the marker. The colors we used are recognizable with typical [Olympic symbols](https://en.wikipedia.org/wiki/Olympic_symbols#targetText=The%20Olympic%20flag%20has%20a,world%20at%20the%20present%20time.)
+
+<br>
+
+```javascript
+function olympicsColor(m) {
+    return m > 800 ? '#FBB32E' :
+        m > 400 ? '#0186C3' :
+        m > 200 ? '#158C39' :
         '#EE304D'
 }
+```
 
+<br>
+
+Although this layer was a little simpler than the wineLayer, calling all the features correctly was crucial. We used ```olympicsData``` as the first parameter in ```L.geoJson()```, just like the wineLayer. But then we created another function inside called [```pointToLayer```](https://leafletjs.com/reference-1.5.0.html#geojson-pointtolayer), using ```feature``` and ```latlng``` as parameters that would be used when returning a new circle for each point of data. For each circle, we used ```latlng``` as the first parameter and then set the ```radius``` and ```fillColor``` with the two functions made previously for this layer. We wanted a Tooltip, so we then used [```.bindTooltip```](https://leafletjs.com/reference-1.5.0.html#tooltip) and ```.openTooltip``` to include information about the country and its number of summer olympic medals.
+
+<br>
+
+```javascript
 // create olympics layer
 olympicsLayer = L.geoJson(olympicsData,{
     pointToLayer:function(feature,latlng){
@@ -343,17 +375,13 @@ olympicsLayer = L.geoJson(olympicsData,{
 
 <br>
 
-We added a tooltip with flag icons, country, medal count, and rank.
-
-<br>
-
 <p align='center'><img src='images/readme-images/tooltip.gif' alt='gif-of-olympic-medal-tooltip' width='90%'></p>
 
 <br>
 
 #### Military Bases Layer
 
-Last, we made a simple military bases layer.
+Last, we made a simple military bases layer with tank icons (called in the ```pointToLayer``` function with ```L.marker```) and with Popups ([```.bindPopup```](https://leafletjs.com/reference-1.5.0.html#popup)) giving more information about the bases and which countries to which they belong.
 
 <br>
 
@@ -375,10 +403,6 @@ militaryLayer = L.geoJson(militaryData, {
 
 <br>
 
-And we added popups with more information for each little tank icon.
-
-<br>
-
 <p align='center'><img src='images/readme-images/popup.gif' alt='gif-of-military-popup-info' width='90%'></p>
 
 <br>
@@ -393,7 +417,7 @@ We combined the three layers into a variable called ```mapOverlay```.
 // create overlays
 const mapOverlay = {
     "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>": wineLayer,
-    "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>": olympicsLayer,
+    "<span>&nbsp;&nbsp; Summer Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>": olympicsLayer,
     "<span>&nbsp;&nbsp; Overseas Military Bases &nbsp;&nbsp;<img class='layer-img' src='../images/tank.svg'/></span>": militaryLayer
 };
 ```
@@ -424,7 +448,7 @@ We wanted the map to show more information depending on which layers were shown.
 
 #### Layer Control
 
-We started with the layer control, the section where the user can choose which baselayers or map overlays to observe.
+We started with the layer control, the section where the user can choose which baselayers or map overlays to observe. We decided to not allow this control to collapse to allow a user to more easily switch between layers without having to wait for the control to open up again.
 
 <br>
 
@@ -439,9 +463,13 @@ layerDiv.addTo(myMap);
 
 <br>
 
+<p align='center'><img src='images/readme-images/three-layers.gif' alt='gif-of-three-geomapping-layers' width='90%'></p>
+
+<br>
+
 #### Wine Information Div
 
-We wanted users to be able to see the amount of wine in Liters each country consumed whenever hovering over the country.
+We wanted users to be able to see the amount of wine in Liters each country consumed whenever hovering over the country (shown previously on because these controls were created here and then used in previous functions). The [```L.Control```](https://leafletjs.com/reference-1.5.0.html#control) and [```L.DomUtil```](https://leafletjs.com/reference-1.5.0.html#domutil) were boilerplate, but understanding how it works took some studying.
 
 <br>
 
@@ -471,7 +499,7 @@ info.addTo(myMap);
 
 #### Wine Consumption Legend
 
-We also made a legend explaining what the range of colors mean for wine consumption.
+We also made a legend explaining what the range of colors mean for wine consumption. Again, this was boilerplate from documentation, only changing where necessary to match our own data.
 
 <br>
 
@@ -500,7 +528,7 @@ legend.addTo(myMap);
 
 #### Olympic Medals Legend
 
-Since we added a legend for the wine consumption layer, we thought it'd be best to also add a legend to explain what the marker colors mean for the number of medals in olympic medals layer.
+Since we added a legend for the wine consumption layer, we thought it'd be best to also add a legend to explain what the marker colors mean for the number of medals in the summer olympic medals layer.
 
 <br>
 
@@ -513,7 +541,7 @@ olympicsLegend.onAdd = function() {
     const div = L.DomUtil.create('div', 'oLegend');
     const medals = [0,200,400,800]
     // const labels = []
-    div.innerHTML = '<h5>Totals Olympic Medals<br>Won by Country<br>(up to 2016)</h5>'
+    div.innerHTML = '<h5>Total Summer Olympic Medals<br>Won by Country<br>(up to 2016)</h5>'
     for (let i = 0; i < medals.length; i++){
         div.innerHTML +=
             '<i style="background:' + olympicsColor(medals[i] + 1) + '"></i> ' +
@@ -527,7 +555,7 @@ olympicsLegend.onAdd = function() {
 
 #### Adding and Removing Legends and Information Divs With Layer Additions and Removals 
 
-At this point, we were really proud of our map. But there were some things bothering us. Whenever we would uncheck the wine consumption layer, the information div and the legend for this layer would stay on the screen. Of course, the information div didn't work anymore because the hovering function was taken away with the layer, but we weren't sure how to add this section to the layer itself. So after a little research on [Stack Exchange](https://gis.stackexchange.com/a/188341), we determined adding event listeners to add or remove controls would be best. We were able to make a function that added the controls or removed the controls if the event layer name matched what we had made earlier when declaring the ```mapOverlay``` variable.
+At this point, we were really proud of our visualization. But there were some things bothering us. Whenever we would uncheck the wine consumption layer, the information div and the legend for this layer would stay on the screen. Of course, the information div didn't work anymore because the hovering function was taken away with the layer, but we weren't sure how to add this section to the layer itself. So after a little research on [Stack Exchange](https://gis.stackexchange.com/a/188341), we determined adding event listeners to add or remove controls would be best. We were able to make a function that added the controls or removed the controls if the event layer name matched what we had made earlier when declaring the ```mapOverlay``` variable.
 
 <br>
 
@@ -537,7 +565,7 @@ myMap.on('overlayadd', function(eventLayer){
     if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>"){
         myMap.addControl(info);
         myMap.addControl(legend);
-    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
+    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Summer Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
         myMap.addControl(olympicsLegend);
     }
 });
@@ -547,7 +575,7 @@ myMap.on('overlayremove', function(eventLayer){
     if (eventLayer.name === "<span>&nbsp;&nbsp; Wine Consumption &nbsp;&nbsp;<img class='layer-img' src='../images/glass.svg'/></span>"){
          myMap.removeControl(info);
          myMap.removeControl(legend);
-    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
+    } else if (eventLayer.name === "<span>&nbsp;&nbsp; Summer Olympic Medals &nbsp;&nbsp;<img class='layer-img' src='../images/medal.png'/></span>") {
         myMap.removeControl(olympicsLegend);
     }
 });
@@ -558,11 +586,12 @@ myMap.on('overlayremove', function(eventLayer){
 ## NEXT STEPS:
 
 We would love to extend this project in the future to include the following considerations:
-* designing three layers so that it's not too much information at once
-* adding more controls such as dropdowns that allow more information but not all at once
-* plotting more trends that are popular to compare across the globe (with fewer at once)
+* using GitHub Pages to allow anyone to observe our visualization instead of only being able to observe the gifs in this README (we tried to use GitHub Pages, but most of the SVGs don't show up and it ruins the experience)
+* designing more layer controls with specific years
 * changing the toggling of layers to be only two combinations at once (such as radio buttons for wine and olympic layers but a checkbox for military layer)
-* adding flag icons instead of circle markers for the olympic layer
+* adding other types of controls, such as dropdowns, that allow more data but with different selections intead of all at once
+* plotting more trends that are popular to compare across the globe (again, with fewer at once or more control over which are shown together)
+* adding flag icons instead of circle markers for the olympic layer (currently, this would affect the tanks because they are using the same coordinates)
 * using a database to get real time data on other trends that change more frequently, such as current billionaires around the world 
 
 <br>
