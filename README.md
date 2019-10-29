@@ -197,7 +197,6 @@ var wineLayer, olympicsLayer, militaryLayer;
 
 Next, we began to create our different layers that would overlap the base layers.
 
-<br>
 
 #### Wine Consumption Layer
 
@@ -294,7 +293,7 @@ The event listener ```layer.on()``` combines our three functions (```highlightFe
 
 ```javascript
 // fxn to bring all previous feature fxns together
-function onEachFeature(layer) {
+function onEachFeature(feature,layer) {
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,

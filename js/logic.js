@@ -90,7 +90,7 @@ function zoomToFeature(e) {
 }
 
 // fxn to bring all previous feature fxns together
-function onEachFeature(layer) {
+function onEachFeature(feature,layer) {
     layer.on({
         mouseover: highlightFeature,
         mouseout: resetHighlight,
